@@ -1,10 +1,8 @@
 ########################## QT #################################
 find_package(Qt5 COMPONENTS Widgets OpenGL)
-if(Qt5_FOUND)
-    message("FOUND QT")
-else()
-    message("NOT FOUND QT")
-endif()
+
+######################### OSG ######################################
+find_package(OpenSceneGraph 3.6.0 REQUIRED osgDB osgGA osgUtil osgText osgViewer osgWidget osgUtil osgManipulator osgVolume osgTerrain osgSim osgShadow osgFX osgParticle osgAnimation)
 
 add_subdirectory(Vendors)
 add_subdirectory(Runtime)

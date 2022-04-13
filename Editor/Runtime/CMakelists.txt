@@ -18,10 +18,29 @@ target_compile_options(${TARGET_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:
 target_link_libraries(${TARGET_NAME} PUBLIC
           Qt5::Widgets
           Qt5::OpenGL
+          ${OSG_LIBRARIES} 
+          ${OSGVIEWER_LIBRARIES}
+          ${OSGUTIL_LIBRARIES} 
+          ${OSGDB_LIBRARIES} 
+          ${OSGGA_LIBRARIES} 
+          ${OPENTHREADS_LIBRARIES}
+          ${OSGTEXT_LIBRARIES}
+          ${OSGMANIPULATOR_LIBRARIES}
+          ${OSGVOLUME_LIBRARIES}
+          ${OSGTERRAIN_LIBRARIES}
+          ${OSGSIM_LIBRARIES}
+          ${OSGSHADOW_LIBRARIES}
+          ${OSGFX_LIBRARIES}
+          ${OSGPARTICLE_LIBRARIES}
+          ${OSGANIMATION_LIBRARIES}
+          osgQOpenGL
           )
 
 
 target_include_directories(
   ${TARGET_NAME} 
-  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/>
+  PUBLIC 
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/>
+  $<BUILD_INTERFACE:${OSG_INCLUDE_DIR}/>
+  $<BUILD_INTERFACE:${VENDORS_DIR}/osgQt/include/>
 )

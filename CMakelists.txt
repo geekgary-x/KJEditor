@@ -21,12 +21,14 @@ endif()
 set(KJEDITOR_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(CMAKE_INSTALL_PREFIX "${KJEDITOR_ROOT_DIR}/bin")
 set(BINARY_ROOT_DIR "${CMAKE_INSTALL_PREFIX}/")
-# 设置静态库文件目录
+# static library output dir
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${KJEDITOR_ROOT_DIR}/out/lib)
-# 动态库文件目录
+# dynamic library output dir
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${KJEDITOR_ROOT_DIR}/out/lib)
-# 可执行文件目录
+# executalbe dir
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${KJEDITOR_ROOT_DIR}/out/bin)
+# vendors dir
+set(VENDORS_DIR ${CMAKE_SOURCE_DIR}/Editor/Vendors)
 
 
 add_subdirectory(Editor)
