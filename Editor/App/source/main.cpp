@@ -4,7 +4,6 @@
 
 int main(int argc, char *argv[])
 {
-    Soarscape::EngineInitParams param;
     Soarscape::PublicSingleton<Soarscape::Engine>::getInstance().startEngine(argc, argv);
     Soarscape::PublicSingleton<Soarscape::Editor>::getInstance().initialize(&Soarscape::PublicSingleton<Soarscape::Engine>::getInstance());
     bool rnt = Soarscape::PublicSingleton<Soarscape::Editor>::getInstance().run();
