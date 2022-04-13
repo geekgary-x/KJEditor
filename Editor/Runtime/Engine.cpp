@@ -3,8 +3,9 @@
 #include <thread>
 namespace Soarscape
 {
-    void Engine::startEngine(const EngineInitParams& param)
+    void Engine::startEngine(int argc, char* argv[])
     {
+        m_QtApp = std::make_unique<QApplication>(argc, argv);
         LOG_INFO("Start editor engine");
     }
     void Engine::shutdownEngine()

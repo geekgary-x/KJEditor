@@ -7,8 +7,8 @@ namespace Soarscape
 	class Renderer : public PublicSingleton<Renderer>
 	{
 	public:
-		Renderer() = delete;
-	private:
+		Renderer() = default;
+	public:
 		osgQOpenGLWidget m_osgQt;
 	};
 }

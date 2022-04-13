@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/Base/PublicSingleton.h"
 #include <filesystem>
+#include <qapplication.h>
 namespace Soarscape
 {
     struct EngineInitParams
@@ -12,7 +13,10 @@ namespace Soarscape
     class Engine : public PublicSingleton<Engine>
     {
     public:
-        void startEngine(const EngineInitParams& param);
+        void startEngine(int argc, char* argv[]);
         void shutdownEngine();
+
+    private:
+        std::unique_ptr<QApplication> m_QtApp;
     };
 } // namespace Scaor
