@@ -42,5 +42,5 @@ target_include_directories(
   PUBLIC 
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/>
   $<BUILD_INTERFACE:${OSG_INCLUDE_DIR}/>
-  $<BUILD_INTERFACE:${VENDORS_DIR}/osgQt/include/>
+  $<BUILD_INTERFACE:${VENDORS_DIR}/osgQt/install/include/>
 )
