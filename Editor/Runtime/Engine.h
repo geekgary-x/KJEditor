@@ -16,7 +16,7 @@ namespace Soarscape
         void startEngine(int argc, char* argv[]);
         void shutdownEngine();
 
-    private:
+    public:
         std::unique_ptr<QApplication> m_QtApp;
     };
 } // namespace Scaor

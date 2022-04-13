@@ -7,7 +7,7 @@ namespace Soarscape
 	{
 	public:
 		void initialize(Engine* engine_runtime);
-		void run();
+		bool run();
 
 	private:
 		Engine* m_RunTimeEngine;
