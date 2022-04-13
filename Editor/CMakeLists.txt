@@ -1,8 +1,11 @@
-########################## QT #################################
+########################## QT ######################################
 find_package(Qt5 COMPONENTS Widgets OpenGL)
 
 ######################### OSG ######################################
 find_package(OpenSceneGraph 3.6.0 REQUIRED osgDB osgGA osgUtil osgText osgViewer osgWidget osgUtil osgManipulator osgVolume osgTerrain osgSim osgShadow osgFX osgParticle osgAnimation)
+
+######################### spdlog ###################################
+find_package(spdlog CONFIG REQUIRED)
 
 add_subdirectory(Vendors)
 add_subdirectory(Runtime)

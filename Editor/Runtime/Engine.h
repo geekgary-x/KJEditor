@@ -13,5 +13,6 @@ namespace Soarscape
     {
     public:
         void startEngine(const EngineInitParams& param);
+        void shutdownEngine();
     };
 } // namespace Scaor
