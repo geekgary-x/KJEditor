@@ -8,6 +8,10 @@ namespace Soarscape
         m_QtApp = std::make_unique<QApplication>(argc, argv);
         LOG_INFO("Start editor engine");
     }
+    void Engine::run()
+    {
+        m_UISurface->run();
+    }
     void Engine::shutdownEngine()
     {
         LOG_INFO("Shutdown editor engine");

@@ -2,6 +2,7 @@
 #include "Core/Base/PublicSingleton.h"
 #include <filesystem>
 #include <qapplication.h>
+#include <Function/UI/UIInterface.h>
 namespace Soarscape
 {
     struct EngineInitParams
@@ -14,9 +15,12 @@ namespace Soarscape
     {
     public:
         void startEngine(int argc, char* argv[]);
+        void setupUISurface(UIInterface* pui) { m_UISurface = pui; }
+        void run();
         void shutdownEngine();
 
     public:
         std::unique_ptr<QApplication> m_QtApp;
+        UIInterface* m_UISurface;
     };
 } // namespace Scaor

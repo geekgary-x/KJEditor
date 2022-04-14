@@ -10,4 +10,3 @@ int main(int argc, char *argv[])
     Soarscape::PublicSingleton<Soarscape::Engine>::getInstance().shutdownEngine();
     return rnt;
 }
-//! [2]
