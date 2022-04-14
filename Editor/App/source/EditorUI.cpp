@@ -3,9 +3,13 @@
 #include <Function/Render/Renderer.h>
 namespace Soarscape
 {
+	EditorUI::EditorUI()
+	{
+
+	}
 	void EditorUI::run()
 	{
 		LOG_INFO("EditorUI run");
-		PublicSingleton<Renderer>::getInstance().m_osgQt.show();
+		m_Mainwindow.showMaximized();
 	}
 }

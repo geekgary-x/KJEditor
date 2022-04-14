@@ -35,6 +35,7 @@ target_link_libraries(${TARGET_NAME} PUBLIC
           ${OSGANIMATION_LIBRARIES}
           osgQOpenGL
           spdlog::spdlog
+          ads::qtadvanceddocking
           )
 
 

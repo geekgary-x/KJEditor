@@ -7,6 +7,8 @@ find_package(OpenSceneGraph 3.6.0 REQUIRED osgDB osgGA osgUtil osgText osgViewer
 ######################### spdlog ###################################
 find_package(spdlog CONFIG REQUIRED)
 
+find_package(qtadvanceddocking CONFIG REQUIRED)
+
 add_subdirectory(Vendors)
 add_subdirectory(Runtime)
 add_subdirectory(App)
