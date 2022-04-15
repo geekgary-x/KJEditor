@@ -2,6 +2,7 @@
 #include "EditorUI.h"
 #include <Core/Base/macro.h>
 #include <Engine.h>
+#include <Function/Scene/Scene.h>
 namespace Soarscape
 {
 	void Editor::initialize(int argc, char* argv[])
