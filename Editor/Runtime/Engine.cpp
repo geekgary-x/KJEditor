@@ -3,7 +3,7 @@
 #include <thread>
 namespace Soarscape
 {
-    void Engine::startEngine(const EngineInitParams& param)
+    void Engine::startEngine(int argc, char* argv[])
     {
         LOG_INFO("Start editor engine");
         m_isRunning = true;

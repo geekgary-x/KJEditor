@@ -13,7 +13,7 @@ namespace Soarscape
     class Engine : public PublicSingleton<Engine>
     {
     public:
-        void startEngine(const EngineInitParams&);
+        void startEngine(int argc, char* argv[]);
         void setupUISurface(UIInterface* pui) { m_UISurface = pui; }
         void run();
         void shutdownEngine();
