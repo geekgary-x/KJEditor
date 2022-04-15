@@ -11,6 +11,6 @@ namespace Soarscape
 
 		void run() override;
 	private:
-		MainWindow m_Mainwindow;
+		MainWindow* m_Mainwindow;
 	};
 }

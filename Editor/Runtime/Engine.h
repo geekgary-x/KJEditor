@@ -1,7 +1,6 @@
 #pragma once
 #include "Core/Base/PublicSingleton.h"
 #include <filesystem>
-#include <qapplication.h>
 #include <Function/UI/UIInterface.h>
 namespace Soarscape
 {
@@ -14,13 +13,13 @@ namespace Soarscape
     class Engine : public PublicSingleton<Engine>
     {
     public:
-        void startEngine(int argc, char* argv[]);
+        void startEngine(const EngineInitParams&);
         void setupUISurface(UIInterface* pui) { m_UISurface = pui; }
         void run();
         void shutdownEngine();
 
     public:
-        std::unique_ptr<QApplication> m_QtApp;
+        bool         m_isRunning = false;
         UIInterface* m_UISurface;
     };
 } // namespace Scaor

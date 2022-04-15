@@ -3,10 +3,10 @@
 #include <thread>
 namespace Soarscape
 {
-    void Engine::startEngine(int argc, char* argv[])
+    void Engine::startEngine(const EngineInitParams& param)
     {
-        m_QtApp = std::make_unique<QApplication>(argc, argv);
         LOG_INFO("Start editor engine");
+        m_isRunning = true;
     }
     void Engine::run()
     {
@@ -15,6 +15,9 @@ namespace Soarscape
     void Engine::shutdownEngine()
     {
         LOG_INFO("Shutdown editor engine");
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+
+        // waiting for other thread to release
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        m_isRunning = false;
     }
 } // namespace SoaScape

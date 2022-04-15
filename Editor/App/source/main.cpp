@@ -4,9 +4,9 @@
 
 int main(int argc, char *argv[])
 {
-    Soarscape::PublicSingleton<Soarscape::Engine>::getInstance().startEngine(argc, argv);
-    Soarscape::PublicSingleton<Soarscape::Editor>::getInstance().initialize(&Soarscape::PublicSingleton<Soarscape::Engine>::getInstance());
-    bool rnt = Soarscape::PublicSingleton<Soarscape::Editor>::getInstance().run();
+    Soarscape::EngineInitParams param;
+    Soarscape::PublicSingleton<Soarscape::Engine>::getInstance().startEngine(param);
+    Soarscape::PublicSingleton<Soarscape::Editor>::getInstance().initialize(argc, argv);
+    Soarscape::PublicSingleton<Soarscape::Editor>::getInstance().run();
     Soarscape::PublicSingleton<Soarscape::Engine>::getInstance().shutdownEngine();
-    return rnt;
 }

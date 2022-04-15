@@ -10,6 +10,7 @@ namespace Soarscape
 	void EditorUI::run()
 	{
 		LOG_INFO("EditorUI run");
-		m_Mainwindow.showMaximized();
+		m_Mainwindow = new MainWindow;
+		m_Mainwindow->showMaximized();
 	}
 }
