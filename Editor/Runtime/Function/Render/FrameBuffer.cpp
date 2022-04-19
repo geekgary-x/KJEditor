@@ -8,9 +8,9 @@
 #include "Function/Render/RenderImplement/OpenGL/OpenGLFrameBuffer.h"
 namespace Soarscape
 {
-    std::shared_ptr<FrameBuffer> FrameBuffer::Create(const FrameBufferSpecification& spec)
+    std::shared_ptr<FrameBuffer> FrameBuffer::create(const FrameBufferSpecification& spec)
     {
-        switch (RenderAPI::GetAPI())
+        switch (RenderAPI::getAPI())
         {
         case RenderAPI::API::None:
             ASSERT(false, "RenderAPI is None")

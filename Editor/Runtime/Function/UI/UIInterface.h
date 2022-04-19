@@ -6,5 +6,6 @@ namespace Soarscape
     {
     public:
         virtual void run() {}
+        virtual void getFramebuffer() = 0;
     };
 }

@@ -11,11 +11,11 @@ namespace Soarscape
             None = 0,
             OpenGL
         };
-        static API GetAPI();
-        static std::unique_ptr<RenderAPI> Create();
-        virtual void Clear() = 0;
-        virtual void SetClearColor(const glm::vec4& color) = 0;
-        virtual void Init() = 0;
+        static API getAPI();
+        static std::unique_ptr<RenderAPI> create();
+        virtual void clear() = 0;
+        virtual void setClearColor(const glm::vec4& color) = 0;
+        virtual void init() = 0;
     private:
         static API s_API;
     };

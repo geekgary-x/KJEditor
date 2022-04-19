@@ -43,12 +43,12 @@ namespace Soarscape
     class FrameBuffer
     {
     public:
-        virtual void Bind() = 0;
-        virtual void Unbind() = 0;
-        virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const = 0;
-        virtual int ReadPixel(uint32_t attachmentIndex, int x, int y) = 0;
-        virtual void Resize(uint32_t width, uint32_t height) = 0;
-        static std::shared_ptr<FrameBuffer> Create(const FrameBufferSpecification& spec);
-        virtual const FrameBufferSpecification& GetSpec() const = 0;
+        virtual void bind() = 0;
+        virtual void unbind() = 0;
+        virtual uint32_t getColorAttachmentRendererID(uint32_t index = 0) const = 0;
+        virtual int readPixel(uint32_t attachmentIndex, int x, int y) = 0;
+        virtual void resize(uint32_t width, uint32_t height) = 0;
+        static std::shared_ptr<FrameBuffer> create(const FrameBufferSpecification& spec);
+        virtual const FrameBufferSpecification& getSpec() const = 0;
     };
 }

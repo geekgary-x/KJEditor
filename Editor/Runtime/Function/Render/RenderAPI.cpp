@@ -6,12 +6,12 @@ namespace Soarscape
 {
     RenderAPI::API RenderAPI::s_API = RenderAPI::API::OpenGL;
 
-    RenderAPI::API RenderAPI::GetAPI()
+    RenderAPI::API RenderAPI::getAPI()
     {
         return s_API;
     }
 
-    std::unique_ptr<RenderAPI> RenderAPI::Create()
+    std::unique_ptr<RenderAPI> RenderAPI::create()
     {
         switch (s_API)
         {

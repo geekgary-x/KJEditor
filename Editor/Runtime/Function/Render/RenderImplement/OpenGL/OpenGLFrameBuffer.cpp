@@ -22,24 +22,24 @@ namespace Soarscape
             return false;
         }
 
-        static void CreateTextures(uint32_t* outID, uint32_t count)
+        static void createTextures(uint32_t* outID, uint32_t count)
         {
             glGenTextures(count, outID);
         }
-        static void CreateRenderbuffers(uint32_t* outID, uint32_t count)
+        static void createRenderbuffers(uint32_t* outID, uint32_t count)
         {
             glGenRenderbuffers(count, outID);
         }
 
-        static void BindTexture(uint32_t id)
+        static void bindTexture(uint32_t id)
         {
             glBindTexture(GL_TEXTURE_2D, id);
         }
-        static void BindRBO(uint32_t id)
+        static void bindRBO(uint32_t id)
         {
             glBindRenderbuffer(GL_RENDERBUFFER, id);
         }
-        static void AttachColorTexture(uint32_t id, GLenum internalFormat, GLenum format, uint32_t width, uint32_t height, int index)
+        static void attachColorTexture(uint32_t id, GLenum internalFormat, GLenum format, uint32_t width, uint32_t height, int index)
         {
             glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, NULL);
 
@@ -50,7 +50,7 @@ namespace Soarscape
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_TEXTURE_2D, id, 0);
         }
-        static void AttachDepthTexture(uint32_t id, GLenum format, uint32_t width, uint32_t height)
+        static void attachDepthTexture(uint32_t id, GLenum format, uint32_t width, uint32_t height)
         {
             glRenderbufferStorage(GL_RENDERBUFFER, format, width, height);
             glBindRenderbuffer(GL_RENDERBUFFER, 0);
@@ -69,10 +69,10 @@ namespace Soarscape
                 m_DepthAttachmentSpecification = attach;
         }
         
-        Invalidate();
+        invalidate();
     }
 
-    void OpenGLFrameBuffer::Invalidate()
+    void OpenGLFrameBuffer::invalidate()
     {
         if (m_RendererID){
             glDeleteFramebuffers(1, &m_RendererID);
@@ -89,30 +89,30 @@ namespace Soarscape
         if (m_ColorAttachmentSpecifications.size())
         {
             m_ColorAttachments.resize(m_ColorAttachmentSpecifications.size());
-            Utils::CreateTextures(m_ColorAttachments.data(), m_ColorAttachments.size());
+            Utils::createTextures(m_ColorAttachments.data(), m_ColorAttachments.size());
             for (size_t i = 0; i < m_ColorAttachments.size(); i++)
             {
-                Utils::BindTexture(m_ColorAttachments[i]);
+                Utils::bindTexture(m_ColorAttachments[i]);
                 switch (m_ColorAttachmentSpecifications[i].TextureFormat)
 				{
 					case FrameBufferTextureFormat::RGBA8:
-						Utils::AttachColorTexture(m_ColorAttachments[i], GL_RGBA8, GL_RGBA, m_Specification.Width, m_Specification.Height, i);
+						Utils::attachColorTexture(m_ColorAttachments[i], GL_RGBA8, GL_RGBA, m_Specification.Width, m_Specification.Height, i);
 						break;
 					case FrameBufferTextureFormat::RED_INTEGER:
-						Utils::AttachColorTexture(m_ColorAttachments[i], GL_R32I, GL_RED_INTEGER, m_Specification.Width, m_Specification.Height, i);
+						Utils::attachColorTexture(m_ColorAttachments[i], GL_R32I, GL_RED_INTEGER, m_Specification.Width, m_Specification.Height, i);
 						break;
 				}
             }
         }
         if (m_DepthAttachmentSpecification.TextureFormat != FrameBufferTextureFormat::None)
         {
-            Utils::CreateRenderbuffers(&m_DepthAttachment, 1);
-            Utils::BindRBO(m_DepthAttachment);
+            Utils::createRenderbuffers(&m_DepthAttachment, 1);
+            Utils::bindRBO(m_DepthAttachment);
             switch (m_DepthAttachmentSpecification.TextureFormat)
             {
             case FrameBufferTextureFormat::DEPTH24STENCIL8:
                 {
-                    Utils::AttachDepthTexture(m_DepthAttachment, GL_DEPTH24_STENCIL8, m_Specification.Width, m_Specification.Height);
+                    Utils::attachDepthTexture(m_DepthAttachment, GL_DEPTH24_STENCIL8, m_Specification.Width, m_Specification.Height);
                     break;
                 }
             }
@@ -131,7 +131,7 @@ namespace Soarscape
 		}
         
         // glGenTextures(1, &m_ColorAttachment);
-        // glBindTexture(GL_TEXTURE_2D, m_ColorAttachment);
+        // glbindTexture(GL_TEXTURE_2D, m_ColorAttachment);
         // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Specification.Width, m_Specification.Height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 
         // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -139,7 +139,7 @@ namespace Soarscape
         // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
         // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        // glBindTexture(GL_TEXTURE_2D, 0);
+        // glbindTexture(GL_TEXTURE_2D, 0);
 
         // 将它附加到当前绑定的帧缓冲对象
         // glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ColorAttachment, 0);
@@ -156,12 +156,12 @@ namespace Soarscape
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
-    void OpenGLFrameBuffer::Bind()
+    void OpenGLFrameBuffer::bind()
     {
         glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
         glViewport(0, 0, m_Specification.Width, m_Specification.Height);
     }
-    void OpenGLFrameBuffer::Unbind()
+    void OpenGLFrameBuffer::unbind()
     {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
@@ -173,19 +173,19 @@ namespace Soarscape
         glDeleteRenderbuffers(1, &m_DepthAttachment);
     }
 
-    uint32_t OpenGLFrameBuffer::GetColorAttachmentRendererID(uint32_t index) const
+    uint32_t OpenGLFrameBuffer::getColorAttachmentRendererID(uint32_t index) const
     {
         // GU_ASSERT(index > m_ColorAttachments.size(), "index is over size of colorattach");
         return m_ColorAttachments[index];
     }
 
-    void OpenGLFrameBuffer::Resize(uint32_t width, uint32_t height)
+    void OpenGLFrameBuffer::resize(uint32_t width, uint32_t height)
     {
         m_Specification.Width=width;
         m_Specification.Height = height;
-        Invalidate();
+        invalidate();
     }
-    int OpenGLFrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
+    int OpenGLFrameBuffer::readPixel(uint32_t attachmentIndex, int x, int y)
     {
         ASSERT(attachmentIndex < m_ColorAttachments.size(), "attachmentIndex is greater than size of attachments");
 

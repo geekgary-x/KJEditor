@@ -5,6 +5,14 @@ namespace Soarscape
 {
 	EditorUI::EditorUI()
 	{
+		FrameBufferSpecification spec;
+		spec.AttachmentsSpecification = { FrameBufferTextureFormat::RGBA8, FrameBufferTextureFormat::RED_INTEGER, FrameBufferTextureFormat::Depth };
+		spec.Height = 1280;
+		spec.Width = 720;
+		/*m_FrameBuffer = FrameBuffer::create(spec);*/
+	}
+	void EditorUI::getFramebuffer()
+	{
 
 	}
 	void EditorUI::run()
