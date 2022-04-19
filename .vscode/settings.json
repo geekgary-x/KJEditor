@@ -90,6 +90,14 @@
         "xutility": "cpp",
         "export": "cpp",
         "osgqopenglwidget": "cpp",
-        "osgqopenglwindow": "cpp"
+        "osgqopenglwindow": "cpp",
+        "cstdarg": "cpp",
+        "cwctype": "cpp",
+        "queue": "cpp",
+        "random": "cpp",
+        "regex": "cpp",
+        "span": "cpp",
+        "stack": "cpp",
+        "valarray": "cpp"
     },
 }

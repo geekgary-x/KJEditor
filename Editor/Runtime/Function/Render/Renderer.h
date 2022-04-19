@@ -7,5 +7,6 @@ namespace Soarscape
 	public:
 		Renderer() = default;
 	public:
+
 	};
 }
