@@ -1,11 +1,15 @@
 # KJEditor
 基于vcglib的Editor
 
+# clone
+```bash
+git clone https://github.com/StoneHappy/KJEditor.git --recursive
+```
 
 ## 依赖
 你需要通过vcpkg安装osg、qt5和spdlog
 ```bash
-vcpkg install osg:x64-windows qt5:x64-windows spdlog:x64-windows
+vcpkg install qt5:x64-windows qt-advanced-docking-system:x64-windows
 ```
 
 ## 构建方法
