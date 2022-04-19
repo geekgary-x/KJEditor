@@ -1,5 +1,6 @@
 #include "EditorRenderWidget.h"
 #include <qopenglcontext.h>
+#include <Core/Base/macro.h>
 namespace Soarscape
 {
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
@@ -10,8 +11,8 @@ namespace Soarscape
 
 	void EditorRendererWidget::initializeGL()
 	{
-		initializeOpenGLFunctions();
-		glClearColor(0.7f, .3f, 0.3f, 1.0f);
+		ASSERT(gladLoadGL(), "glad loadGL failed!");
+		glClearColor(0.3, 0.3, 0.3, 1.0);
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
@@ -20,6 +21,6 @@ namespace Soarscape
 
 	void EditorRendererWidget::paintGL()
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
+
 	}
 }

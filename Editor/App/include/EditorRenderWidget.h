@@ -1,9 +1,9 @@
 #pragma once
+#include <glad/glad.h>
 #include <qopenglwidget.h>
-#include <qopenglfunctions.h>
 namespace Soarscape
 {
-	class EditorRendererWidget : public QOpenGLWidget, public QOpenGLFunctions
+	class EditorRendererWidget : public QOpenGLWidget
 	{
 	public:
 		EditorRendererWidget(QWidget* parent);
