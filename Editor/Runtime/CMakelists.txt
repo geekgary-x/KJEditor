@@ -33,7 +33,6 @@ target_link_libraries(${TARGET_NAME} PUBLIC
           ${OSGFX_LIBRARIES}
           ${OSGPARTICLE_LIBRARIES}
           ${OSGANIMATION_LIBRARIES}
-          osgQOpenGL
           spdlog::spdlog
           ads::qtadvanceddocking
           ENTT
@@ -44,6 +43,5 @@ target_include_directories(
   ${TARGET_NAME} 
   PUBLIC 
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/>
-  $<BUILD_INTERFACE:${OSG_INCLUDE_DIR}/>
   $<BUILD_INTERFACE:${VENDORS_DIR}/osgQt/install/include/>
 )

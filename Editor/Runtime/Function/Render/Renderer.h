@@ -1,7 +1,5 @@
 #pragma once
 #include "Core/Base/PublicSingleton.h"
-#include <osgQOpenGL/osgQOpenGLWidget>
-
 namespace Soarscape
 {
 	class Renderer : public PublicSingleton<Renderer>
@@ -9,6 +7,5 @@ namespace Soarscape
 	public:
 		Renderer() = default;
 	public:
-		osgQOpenGLWidget m_osgQt;
 	};
 }
