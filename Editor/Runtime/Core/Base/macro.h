@@ -30,9 +30,11 @@
 #ifndef NDEBUG
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 #define DEBUGBREAK() __debugbreak()
+//#else
+//#define DEBUGBREAK()
+#endif
 #else
 #define DEBUGBREAK()
-#endif
 #endif // !NDEBUG
 
 #define ASSERT(checked, ...) { if(!(checked)) { LOG_ERROR(__VA_ARGS__); DEBUGBREAK(); } }
