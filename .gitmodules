@@ -4,3 +4,9 @@
 [submodule "Editor/Vendors/glm"]
 	path = Editor/Vendors/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "Editor/Vendors/stb"]
+	path = Editor/Vendors/stb
+	url = https://github.com/nothings/stb.git
+[submodule "Editor/Vendors/imgui"]
+	path = Editor/Vendors/imgui
+	url = https://github.com/ocornut/imgui.git

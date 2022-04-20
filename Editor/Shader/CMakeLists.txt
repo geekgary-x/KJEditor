@@ -30,4 +30,4 @@ compile_shader(
   "${GENERATED_SHADER_FOLDER}"
   "glslangValidator.exe")
 
-set_target_properties("${TARGET_NAME}" PROPERTIES FOLDER "Engine" )
+set_target_properties("${TARGET_NAME}" PROPERTIES FOLDER "Editor" )
