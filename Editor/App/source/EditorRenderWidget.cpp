@@ -6,6 +6,35 @@
 #include <iostream>
 namespace Soarscape
 {
+    const uint32_t testvert[] = {
+    0x07230203,0x00010000,0x0008000a,0x0000000e,0x00000000,0x00020011,0x00000001,0x0006000b,
+    0x00000001,0x4c534c47,0x6474732e,0x3035342e,0x00000000,0x0003000e,0x00000000,0x00000001,
+    0x0006000f,0x00000004,0x00000004,0x6e69616d,0x00000000,0x00000009,0x00030010,0x00000004,
+    0x00000007,0x00030003,0x00000002,0x0000014a,0x00040005,0x00000004,0x6e69616d,0x00000000,
+    0x00050005,0x00000009,0x67617246,0x6f6c6f43,0x00000072,0x00040047,0x00000009,0x0000001e,
+    0x00000000,0x00020013,0x00000002,0x00030021,0x00000003,0x00000002,0x00030016,0x00000006,
+    0x00000020,0x00040017,0x00000007,0x00000006,0x00000004,0x00040020,0x00000008,0x00000003,
+    0x00000007,0x0004003b,0x00000008,0x00000009,0x00000003,0x0004002b,0x00000006,0x0000000a,
+    0x3f800000,0x0004002b,0x00000006,0x0000000b,0x3dcccccd,0x0004002b,0x00000006,0x0000000c,
+    0x00000000,0x0007002c,0x00000007,0x0000000d,0x0000000a,0x0000000b,0x0000000c,0x0000000c,
+    0x00050036,0x00000002,0x00000004,0x00000000,0x00000003,0x000200f8,0x00000005,0x0003003e,
+    0x00000009,0x0000000d,0x000100fd,0x00010038
+    };
+    const uint32_t testfrag[] = {
+    0x07230203,0x00010000,0x0008000a,0x0000000e,0x00000000,0x00020011,0x00000001,0x0006000b,
+    0x00000001,0x4c534c47,0x6474732e,0x3035342e,0x00000000,0x0003000e,0x00000000,0x00000001,
+    0x0006000f,0x00000004,0x00000004,0x6e69616d,0x00000000,0x00000009,0x00030010,0x00000004,
+    0x00000007,0x00030003,0x00000002,0x0000014a,0x00040005,0x00000004,0x6e69616d,0x00000000,
+    0x00050005,0x00000009,0x67617246,0x6f6c6f43,0x00000072,0x00040047,0x00000009,0x0000001e,
+    0x00000000,0x00020013,0x00000002,0x00030021,0x00000003,0x00000002,0x00030016,0x00000006,
+    0x00000020,0x00040017,0x00000007,0x00000006,0x00000004,0x00040020,0x00000008,0x00000003,
+    0x00000007,0x0004003b,0x00000008,0x00000009,0x00000003,0x0004002b,0x00000006,0x0000000a,
+    0x3f800000,0x0004002b,0x00000006,0x0000000b,0x3dcccccd,0x0004002b,0x00000006,0x0000000c,
+    0x00000000,0x0007002c,0x00000007,0x0000000d,0x0000000a,0x0000000b,0x0000000c,0x0000000c,
+    0x00050036,0x00000002,0x00000004,0x00000000,0x00000003,0x000200f8,0x00000005,0x0003003e,
+    0x00000009,0x0000000d,0x000100fd,0x00010038
+    };
+
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
 		: QOpenGLWidget(parent)
 	{}
@@ -101,7 +130,27 @@ namespace Soarscape
             std::cout << "ERROR::SHADER::PROGROG::COMPILATION_FAILED\n"
                 << infoLog << std::endl;
         }
-        glUseProgram(shaderProgram);
+        // glUseProgram(shaderProgram);
+
+        GLuint program = glCreateProgram();
+        GLuint testfragid = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderBinary(1, &testfragid, GL_SHADER_BINARY_FORMAT_SPIR_V, testfrag, sizeof(testfrag));
+        glSpecializeShader(testfragid, "main", 0, nullptr, nullptr);
+        glAttachShader(program, testfragid);
+
+        GLuint testvertid = glCreateShader(GL_VERTEX_SHADER);
+        glShaderBinary(1, &testvertid, GL_SHADER_BINARY_FORMAT_SPIR_V, testvert, sizeof(testvert));
+        glSpecializeShader(testvertid, "main", 0, nullptr, nullptr);
+        glAttachShader(program, testvertid);
+        glLinkProgram(program);
+        glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+        if (!success)
+        {
+            glGetProgramInfoLog(program, 512, NULL, infoLog);
+            std::cout << "ERROR::SHADER::PROGROG::COMPILATION_FAILED\n"
+                << infoLog << std::endl;
+        }
+        glUseProgram(program);
 
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
