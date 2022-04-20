@@ -34,7 +34,7 @@ namespace Soarscape
     0x00050036,0x00000002,0x00000004,0x00000000,0x00000003,0x000200f8,0x00000005,0x0003003e,
     0x00000009,0x0000000d,0x000100fd,0x00010038
     };
-
+    const uint32_t aaavert = 0;
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
 		: QOpenGLWidget(parent)
 	{}
