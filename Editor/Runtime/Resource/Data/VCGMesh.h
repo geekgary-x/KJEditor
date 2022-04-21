@@ -12,7 +12,7 @@ namespace Soarscape
     {
     };
 
-    class VCGVertex : public vcg::Vertex<VCGUsedTypes, vcg::vertex::Coord3f, vcg::vertex::BitFlags, vcg::vertex::Normal3f, vcg::vertex::Mark, vcg::vertex::Color4b>
+    class VCGVertex : public vcg::Vertex<VCGUsedTypes, vcg::vertex::Coord3f, vcg::vertex::TexCoord2f, vcg::vertex::BitFlags, vcg::vertex::Normal3f, vcg::vertex::Mark, vcg::vertex::Color4b>
     {
     };
     class VCGFace : public vcg::Face<VCGUsedTypes, vcg::face::VertexRef,vcg::face::FFAdj, vcg::face::Mark, vcg::face::BitFlags, vcg::face::Normal3f>
@@ -26,11 +26,11 @@ namespace Soarscape
 
     class VCGMesh
     {
-    private:
+    public:
         BaseTriMesh m_Mesh;
     public:
         VCGMesh() = default;
-        void ReadFile(const std::string&);
+        void readFile(const std::string&);
     };
 
 } // namespace kanjing

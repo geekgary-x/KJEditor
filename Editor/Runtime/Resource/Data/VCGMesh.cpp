@@ -4,7 +4,7 @@
 #include <wrap/io_trimesh/import_ply.h>
 namespace Soarscape
 {
-	void VCGMesh::ReadFile(const std::string& filename)
+	void VCGMesh::readFile(const std::string& filename)
 	{
         auto pointPos = filename.find_last_of(".");
         auto lPos = filename.find_last_of("/");

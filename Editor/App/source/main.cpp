@@ -1,7 +1,6 @@
 #include <iostream>
 #include <Engine.h>
 #include <Editor.h>
-#include <Resource/Data/VCGMesh.h>
 int main(int argc, char *argv[])
 {
     Soarscape::PublicSingleton<Soarscape::Engine>::getInstance().startEngine(argc, argv);
