@@ -1,7 +1,3 @@
-/*
- * @Author: ImGili
- * @Description: 
- */
 #include "Function/Render/RenderImplement/OpenGL/OpenGLFrameBuffer.h"
 #include "Core/Base/macro.h"
 #include<glad/glad.h>

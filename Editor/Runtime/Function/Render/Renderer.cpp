@@ -6,4 +6,8 @@ namespace Soarscape
 	{
 
 	}
+	void Renderer::SetRendererTarget(std::shared_ptr<FrameBuffer>& framebuffer)
+	{
+		m_FrameBuffer = framebuffer;
+	}
 }
