@@ -10,3 +10,6 @@
 [submodule "Editor/Vendors/imgui"]
 	path = Editor/Vendors/imgui
 	url = https://github.com/ocornut/imgui.git
+[submodule "Editor/Vendors/vcglib"]
+	path = Editor/Vendors/vcglib
+	url = https://github.com/cnr-isti-vclab/vcglib.git

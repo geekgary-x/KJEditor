@@ -1,5 +1,5 @@
 #include "Scene.h"
-#include "Components.h"
+#include "Resource/Components/Tag.h"
 namespace Soarscape
 {
 	SceneObject Scene::CreateObject(const std::string& name)
@@ -10,4 +10,3 @@ namespace Soarscape
 		return entity;
 	}
 }
-

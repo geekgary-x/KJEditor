@@ -70,6 +70,8 @@ namespace Soarscape
             std::cout << "ERROR::SHADER::PROGROG::COMPILATION_FAILED\n"
                 << infoLog << std::endl;
         }
+        glDeleteShader(svert);
+        glDeleteShader(sfrag);
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)

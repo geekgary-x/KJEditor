@@ -1,7 +1,6 @@
 #pragma once
 #include <entt/entt.hpp>
 #include <Core/Base/PublicSingleton.h>
-#include "Function/Scene/Components.h"
 #include "Core/Base/macro.h"
 namespace Soarscape
 {
