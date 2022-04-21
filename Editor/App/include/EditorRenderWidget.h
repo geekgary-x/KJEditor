@@ -17,5 +17,6 @@ namespace Soarscape
 		std::shared_ptr<FrameBuffer>	m_FrameBuffer;
 		uint32_t						m_QuadVAO;
 		GLuint							m_ScreenShader;
+		bool							m_IsInit = false;
 	};
 }

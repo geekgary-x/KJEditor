@@ -1,6 +1,8 @@
 #pragma once
 #include <vcg/complex/complex.h>
 #include <vector>
+#include <Resource/Data/MeshData.h>
+#include <vector>
 namespace Soarscape
 {
     class VCGVertex;
@@ -31,6 +33,11 @@ namespace Soarscape
     public:
         VCGMesh() = default;
         void readFile(const std::string&);
+        void updateRenderObj();
+        uint32_t m_VAO = 0;
+        uint32_t m_VBO = 0;
+        std::vector<Vertex> m_V;
+        std::vector<uint32_t> m_I;
     };
 
 } // namespace kanjing

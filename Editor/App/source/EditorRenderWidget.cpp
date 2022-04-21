@@ -19,6 +19,7 @@ namespace Soarscape
 
 	void EditorRendererWidget::initializeGL()
 	{
+        if (m_IsInit) return;
 		ASSERT(gladLoadGL(), "glad loadGL failed!");
 		glClearColor(0.3, 0.3, 0.3, 1.0);
 		FrameBufferSpecification spec;
@@ -72,6 +73,8 @@ namespace Soarscape
         }
         glDeleteShader(svert);
         glDeleteShader(sfrag);
+
+        m_IsInit = true;
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)

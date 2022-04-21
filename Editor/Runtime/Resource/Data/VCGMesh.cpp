@@ -2,6 +2,7 @@
 #include "Core/Base/macro.h"
 #include <wrap/io_trimesh/import_obj.h>
 #include <wrap/io_trimesh/import_ply.h>
+#include <glad/glad.h>
 namespace Soarscape
 {
 	void VCGMesh::readFile(const std::string& filename)
@@ -43,4 +44,41 @@ namespace Soarscape
             LOG_ERROR("Editor can't suport format :{0}", extendName);
         }
 	}
+
+    void VCGMesh::updateRenderObj()
+    {
+        if (!m_VAO || !m_VBO)
+        {
+            glGenVertexArrays(1, &m_VAO);
+            glGenBuffers(1, &m_VBO);
+        }
+        
+        m_V.clear();
+        m_V.reserve(m_Mesh.VN());
+        for each (auto & vert in m_Mesh.vert)
+        {
+            Vertex v;
+            v.px = vert.P().X();
+            v.py = vert.P().Y();
+            v.pz = vert.P().Z();
+            v.u = vert.T().u();
+            v.v = vert.T().v();
+            v.nx = vert.N().X();
+            v.ny = vert.N().Y();
+            v.nz = vert.N().Z();
+            m_V.push_back(v);
+        }
+        m_I.clear();
+        m_I.reserve((m_Mesh.FN() * 3));
+        for each (auto& face in m_Mesh.face)
+        {
+            if (!face.IsD())
+            {
+                for (size_t i = 0; i < 3; i++)
+                {
+                    m_I.push_back(vcg::tri::Index(m_Mesh, face.V(i)));
+                }
+            }
+        }
+    }
 }
