@@ -1,11 +1,11 @@
 #pragma once
-
+#include "Function/Render/FrameBuffer.h"
 namespace Soarscape
 {
     class UIInterface
     {
     public:
         virtual void run() {}
-        virtual void getFramebuffer() = 0;
+        virtual const std::shared_ptr<FrameBuffer>& getFramebuffer() const { return nullptr; }
     };
 }

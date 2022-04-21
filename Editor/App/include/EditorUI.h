@@ -9,7 +9,7 @@ namespace Soarscape
 	{
 	public:
 		EditorUI();
-		void getFramebuffer() override;
+		const std::shared_ptr<FrameBuffer>& getFramebuffer() const override;
 		void setFramebuffer(std::shared_ptr<FrameBuffer>& framebuffer);
 		void run() override;
 	private:

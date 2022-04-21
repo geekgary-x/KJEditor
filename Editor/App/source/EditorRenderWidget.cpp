@@ -74,6 +74,7 @@ namespace Soarscape
 
 	void EditorRendererWidget::resizeGL(int w, int h)
 	{
+        m_FrameBuffer->resize(w, h);
 	}
 
 	void EditorRendererWidget::paintGL()
