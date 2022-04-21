@@ -14,6 +14,6 @@ namespace Soarscape
 		void run() override;
 	private:
 		MainWindow* m_Mainwindow;
-		std::shared_ptr<FrameBuffer> m_FrameBuffer;
+		std::shared_ptr<FrameBuffer> m_FrameBuffer = nullptr;
 	};
 }
