@@ -15,7 +15,7 @@ namespace Soarscape
 	void Editor::run()
 	{
 		LOG_INFO("Runing");
-		m_RunTimeEngine->run();
+		m_RunTimeEngine->m_UISurface->run();
 		int qrnt = m_QApp->exec();
 	}
 }

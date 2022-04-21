@@ -8,6 +8,7 @@
 #include "mesh_frag.h"
 #include "screenquad_vert.h"
 #include "screenquad_frag.h"
+#include "Engine.h"
 namespace Soarscape
 {
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
@@ -77,6 +78,8 @@ namespace Soarscape
 
 	void EditorRendererWidget::paintGL()
 	{
+        // engine run
+        PublicSingleton<Engine>::getInstance().run();
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject()); // ·µ»ØÄ¬ÈÏ
         glUseProgram(m_ScreenShader);
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

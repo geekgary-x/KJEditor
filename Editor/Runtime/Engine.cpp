@@ -10,7 +10,7 @@ namespace Soarscape
     }
     void Engine::run()
     {
-        m_UISurface->run();
+
     }
     void Engine::shutdownEngine()
     {
