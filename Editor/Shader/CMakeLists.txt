@@ -1,4 +1,4 @@
-set(TARGET_NAME "KJEditorShadercompile")
+set(TARGET_NAME "EditorShadercompile")
 
 file(GLOB_RECURSE SHADER_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/glsl/*.vert"
                                             "${CMAKE_CURRENT_SOURCE_DIR}/glsl/*.frag"
