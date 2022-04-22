@@ -2,11 +2,11 @@
 
 namespace Soarscape
 {
-	void Mesh::readFile(const std::string&)
+	Mesh::Mesh(const std::string& path)
+		: m_Path(path)
 	{
-
 	}
-	void Mesh::updateRenderObj()
+	void Mesh::update()
 	{
 	}
 	Mesh::~Mesh()

@@ -19,7 +19,6 @@ namespace Soarscape
 {
     std::shared_ptr<Shader> meshShader;
     VCGMesh* vcgmesh;
-    std::shared_ptr<VertexArray> meshvao;
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
 		: QOpenGLWidget(parent)
 	{}
@@ -54,19 +53,9 @@ namespace Soarscape
             });
         m_QuadVAO->addVertexBuffer(quadVBO);
 
-        vcgmesh = new VCGMesh;
-        vcgmesh->readFile("D:/datas/ply/triangle.ply");
-        vcgmesh->updateRenderObj();
+        vcgmesh = new VCGMesh("D:/datas/ply/triangle.ply");
         LOG_INFO("size of {0}", vcgmesh->m_V.size());
-        meshvao = VertexArray::create();
-        auto meshvbo = VertexBuffer::create((void*)vcgmesh->m_V.data(), sizeof(float)*3*8);
-        meshvbo->setLayout({
-            { ShaderDataType::Float3, "aPos" },
-            { ShaderDataType::Float3, "aNormal" },
-            { ShaderDataType::Float2, "aTexCoord" }
-            });
-        meshvao->addVertexBuffer(meshvbo);
-
+        
         m_ScreenShader = Shader::create("ScreenShader");
         m_ScreenShader->link(screenquad_vert, sizeof(screenquad_vert), screenquad_frag, sizeof(screenquad_frag));
         meshShader = Shader::create("MeshShader");
@@ -83,7 +72,7 @@ namespace Soarscape
         // engine run
         PublicSingleton<Engine>::getInstance().run();
         meshShader->bind();
-        meshvao->bind();
+        vcgmesh->m_VAO->bind();
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject()); // ·µ»ØÄ¬ÈÏ
         m_ScreenShader->bind();

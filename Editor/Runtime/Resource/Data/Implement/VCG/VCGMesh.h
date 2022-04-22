@@ -26,21 +26,17 @@ namespace Soarscape
 
     typedef vcg::tri::TriMesh<std::vector<VCGVertex>, std::vector<VCGEdge>, std::vector<VCGFace>> BaseTriMesh;
 
-    class VCGMesh
+    class VCGMesh : public Mesh
     {
     public:
         BaseTriMesh m_Mesh;
     public:
-        VCGMesh() = default;
-        void readFile(const std::string&);
-        void updateRenderObj();
-        uint32_t m_VAO = 0;
-        uint32_t m_VBO = 0;
-        std::vector<Vertex> m_V;
-        std::vector<uint32_t> m_I;
-        std::string m_Path;
+        VCGMesh(const std::string& filename);
+        void update() override;
 
-        bool operator==(const VCGMesh& other) const { return other.m_Path == m_Path; }
+    private:
+        void read(const std::string& filename);
+        void updateBuffer();
     };
 
 } // namespace kanjing

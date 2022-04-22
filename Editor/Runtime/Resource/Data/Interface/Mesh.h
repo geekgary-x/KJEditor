@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <Function/Render/Interface/VertexArray.h>
 namespace Soarscape
 {
 	struct Vertex
@@ -18,12 +19,12 @@ namespace Soarscape
     class Mesh
     {
     public:
-        virtual void readFile(const std::string&);
-        virtual void updateRenderObj();
+        Mesh(const std::string& path);
+        virtual void update();
         virtual ~Mesh();
     public:
-        uint32_t m_VAO = 0;
-        uint32_t m_VBO = 0;
+        std::shared_ptr<VertexArray> m_VAO = nullptr;
+        std::shared_ptr<VertexBuffer> m_VBO = nullptr;
         std::vector<Vertex> m_V;
         std::vector<uint32_t> m_I;
         std::string m_Path;
