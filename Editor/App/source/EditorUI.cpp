@@ -6,7 +6,7 @@ namespace Soarscape
 	{
 		
 	}
-	const std::shared_ptr<FrameBuffer>& EditorUI::getFramebuffer() const
+	const std::shared_ptr<FrameBuffer> EditorUI::getFramebuffer() const
 	{
 		return m_FrameBuffer;
 	}

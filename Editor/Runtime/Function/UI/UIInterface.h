@@ -6,6 +6,6 @@ namespace Soarscape
     {
     public:
         virtual void run() {}
-        virtual const std::shared_ptr<FrameBuffer>& getFramebuffer() const { return nullptr; }
+        virtual const std::shared_ptr<FrameBuffer> getFramebuffer() const { return nullptr; }
     };
 }

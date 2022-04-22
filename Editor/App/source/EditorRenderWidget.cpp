@@ -1,5 +1,4 @@
 #include "EditorRenderWidget.h"
-#include <qopenglcontext.h>
 #include <Core/Base/macro.h>
 #include <Function/Render/Interface//FrameBuffer.h>
 #include <EditorUI.h>

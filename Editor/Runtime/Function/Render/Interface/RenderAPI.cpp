@@ -25,6 +25,7 @@ namespace Soarscape
             break;
         }
         LOG_ERROR("API is not defined!");
+        return nullptr;
     }
 }
 
