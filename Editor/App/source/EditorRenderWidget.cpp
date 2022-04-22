@@ -1,7 +1,7 @@
 #include "EditorRenderWidget.h"
 #include <qopenglcontext.h>
 #include <Core/Base/macro.h>
-#include <Function/Render/FrameBuffer.h>
+#include <Function/Render/Interface//FrameBuffer.h>
 #include <EditorUI.h>
 #include <iostream>
 #include "mesh_vert.h"
@@ -19,7 +19,6 @@ namespace Soarscape
 
 	void EditorRendererWidget::initializeGL()
 	{
-        if (m_IsInit) return;
 		ASSERT(gladLoadGL(), "glad loadGL failed!");
 		glClearColor(0.3, 0.3, 0.3, 1.0);
 		FrameBufferSpecification spec;
@@ -73,8 +72,6 @@ namespace Soarscape
         }
         glDeleteShader(svert);
         glDeleteShader(sfrag);
-
-        m_IsInit = true;
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)

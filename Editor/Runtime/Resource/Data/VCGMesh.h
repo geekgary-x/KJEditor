@@ -2,7 +2,7 @@
 #include <vcg/complex/complex.h>
 #include <vector>
 #include <Resource/Data/MeshData.h>
-#include <vector>
+#include <string>
 namespace Soarscape
 {
     class VCGVertex;
@@ -38,6 +38,9 @@ namespace Soarscape
         uint32_t m_VBO = 0;
         std::vector<Vertex> m_V;
         std::vector<uint32_t> m_I;
+        std::string m_Path;
+
+        bool operator==(const VCGMesh& other) const { return other.m_Path == m_Path; }
     };
 
 } // namespace kanjing

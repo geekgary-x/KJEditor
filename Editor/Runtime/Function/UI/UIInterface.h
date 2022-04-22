@@ -1,5 +1,5 @@
 #pragma once
-#include "Function/Render/FrameBuffer.h"
+#include "Function/Render/Interface/FrameBuffer.h"
 namespace Soarscape
 {
     class UIInterface

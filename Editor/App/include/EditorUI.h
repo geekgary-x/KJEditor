@@ -2,7 +2,7 @@
 #include "Core/Base/PublicSingleton.h"
 #include "Function/UI/UIInterface.h"
 #include "Mainwindow.h"
-#include <Function/Render/FrameBuffer.h>
+#include <Function/Render/Interface/FrameBuffer.h>
 namespace Soarscape
 {
 	class EditorUI : public UIInterface, public PublicSingleton<EditorUI>
