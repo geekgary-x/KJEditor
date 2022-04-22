@@ -6,6 +6,7 @@
 #include <Function/Render/Interface//FrameBuffer.h>
 #include <EditorUI.h>
 #include <Engine.h>
+#include <Resource/Data/Implement/VCG/VCGMesh.h>
 
 #include <Function/Render/Interface/VertexArray.h>
 #include <Function/Render/Interface/Shader.h>
@@ -16,6 +17,9 @@
 #include "screenquad_frag.h"
 namespace Soarscape
 {
+    std::shared_ptr<Shader> meshShader;
+    VCGMesh* vcgmesh;
+    std::shared_ptr<VertexArray> meshvao;
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
 		: QOpenGLWidget(parent)
 	{}
@@ -46,12 +50,27 @@ namespace Soarscape
         auto quadVBO = VertexBuffer::create((void*)quadVertices, sizeof(quadVertices));
         quadVBO->setLayout({
             { ShaderDataType::Float2, "aPos" },
-            { ShaderDataType::Float2, "aTexCoords" }
+            { ShaderDataType::Float2, "aTexCoord" }
             });
         m_QuadVAO->addVertexBuffer(quadVBO);
 
+        vcgmesh = new VCGMesh;
+        vcgmesh->readFile("D:/datas/ply/triangle.ply");
+        vcgmesh->updateRenderObj();
+        LOG_INFO("size of {0}", vcgmesh->m_V.size());
+        meshvao = VertexArray::create();
+        auto meshvbo = VertexBuffer::create((void*)vcgmesh->m_V.data(), sizeof(float)*3*8);
+        meshvbo->setLayout({
+            { ShaderDataType::Float3, "aPos" },
+            { ShaderDataType::Float3, "aNormal" },
+            { ShaderDataType::Float2, "aTexCoord" }
+            });
+        meshvao->addVertexBuffer(meshvbo);
+
         m_ScreenShader = Shader::create("ScreenShader");
         m_ScreenShader->link(screenquad_vert, sizeof(screenquad_vert), screenquad_frag, sizeof(screenquad_frag));
+        meshShader = Shader::create("MeshShader");
+        meshShader->link(mesh_vert, sizeof(mesh_vert), mesh_frag, sizeof(mesh_frag));
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
@@ -63,6 +82,9 @@ namespace Soarscape
 	{
         // engine run
         PublicSingleton<Engine>::getInstance().run();
+        meshShader->bind();
+        meshvao->bind();
+        glDrawArrays(GL_TRIANGLES, 0, 3);
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject()); // ·µ»ØÄ¬ÈÏ
         m_ScreenShader->bind();
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

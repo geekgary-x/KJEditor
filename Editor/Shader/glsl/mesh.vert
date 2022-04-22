@@ -1,7 +1,9 @@
 #version 460 core
-layout (location = 0) in vec3 aPos; // 位置变量的属性位置值为0
+layout (location = 0) in vec3 aPosition; 
+layout (location = 1) in vec3 aNormal; 
+layout (location = 2) in vec2 aTexCoord; 
 
 void main()
 {
-    gl_Position = vec4(aPos, 1.0); // 注意我们如何把一个vec3作为vec4的构造器的参数
+    gl_Position = vec4(aPosition, 1.0);
 }
