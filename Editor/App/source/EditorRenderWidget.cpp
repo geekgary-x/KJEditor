@@ -1,13 +1,19 @@
 #include "EditorRenderWidget.h"
+
+#include <iostream>
+
 #include <Core/Base/macro.h>
 #include <Function/Render/Interface//FrameBuffer.h>
 #include <EditorUI.h>
-#include <iostream>
+#include <Engine.h>
+
+#include <Function/Render/Interface/VertexArray.h>
+
+// shader
 #include "mesh_vert.h"
 #include "mesh_frag.h"
 #include "screenquad_vert.h"
 #include "screenquad_frag.h"
-#include "Engine.h"
 namespace Soarscape
 {
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
@@ -36,18 +42,13 @@ namespace Soarscape
                                 -1.0f, 1.0f, 0.0f, 1.0f,
                                 1.0f, -1.0f, 1.0f, 0.0f,
                                 1.0f, 1.0f, 1.0f, 1.0f };
-
-        GLuint quadVBO;
-        // screen quad VAO
-        glGenVertexArrays(1, &m_QuadVAO);
-        glGenBuffers(1, &quadVBO);
-        glBindVertexArray(m_QuadVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+        m_QuadVAO = VertexArray::create();
+        auto quadVBO = VertexBuffer::create((void*)quadVertices, sizeof(quadVertices));
+        quadVBO->setLayout({
+            { ShaderDataType::Float2, "aPos" },
+            { ShaderDataType::Float2, "aTexCoords" }
+            });
+        m_QuadVAO->addVertexBuffer(quadVBO);
 
         m_ScreenShader = glCreateProgram();
         GLuint sfrag = glCreateShader(GL_FRAGMENT_SHADER);
@@ -86,7 +87,7 @@ namespace Soarscape
         glUseProgram(m_ScreenShader);
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        glBindVertexArray(m_QuadVAO);
+        m_QuadVAO->bind();
         glDisable(GL_DEPTH_TEST);
         glBindTexture(GL_TEXTURE_2D, m_FrameBuffer->getColorAttachmentRendererID());
         glDrawArrays(GL_TRIANGLES, 0, 6);

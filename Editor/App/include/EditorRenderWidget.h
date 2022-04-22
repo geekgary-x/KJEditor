@@ -1,9 +1,11 @@
 #pragma once
 #include <glad/glad.h>
 #include <qopenglwidget.h>
+#include <memory>
 namespace Soarscape
 {
 	class FrameBuffer;
+	class VertexArray;
 	class EditorRendererWidget : public QOpenGLWidget
 	{
 	public:
@@ -15,7 +17,7 @@ namespace Soarscape
 		void paintGL() override;
 	private:
 		std::shared_ptr<FrameBuffer>	m_FrameBuffer;
-		uint32_t						m_QuadVAO;
+		std::shared_ptr<VertexArray>	m_QuadVAO;
 		GLuint							m_ScreenShader;
 	};
 }
