@@ -1,4 +1,4 @@
-#include "Resource/Data/VCGMesh.h"
+#include "Resource/Data/Implement/VCG/VCGMesh.h"
 #include "Core/Base/macro.h"
 #include <wrap/io_trimesh/import_obj.h>
 #include <wrap/io_trimesh/import_ply.h>

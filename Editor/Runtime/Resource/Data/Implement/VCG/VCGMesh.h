@@ -1,7 +1,7 @@
 #pragma once
 #include <vcg/complex/complex.h>
 #include <vector>
-#include <Resource/Data/MeshData.h>
+#include <Resource/Data/Interface/Mesh.h>
 #include <string>
 namespace Soarscape
 {
