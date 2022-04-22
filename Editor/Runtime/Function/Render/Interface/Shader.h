@@ -1,0 +1,25 @@
+#pragma once
+#include <memory>
+#include <glm/glm.hpp>
+#include <string>
+#include "Core/Base/PublicSingleton.h"
+namespace Soarscape
+{
+    class Shader
+    {
+    public:
+        virtual ~Shader() = default;
+        virtual void link(const uint32_t* vshader, size_t vsiz,const uint32_t* fshader, size_t fsize) = 0;
+        virtual void bind() = 0;
+        virtual void unbind() = 0;
+        static std::shared_ptr<Shader> create(const std::string&);
+        virtual void setMat4(const std::string &name, const glm::mat4& value) const = 0;
+        virtual void setInt(const std::string &name, uint32_t value) const = 0;
+    private:
+    };
+
+    class ShaderManager : public PublicSingleton<ShaderManager>
+    {
+
+    };
+}

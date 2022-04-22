@@ -8,7 +8,7 @@
 #include <Engine.h>
 
 #include <Function/Render/Interface/VertexArray.h>
-
+#include <Function/Render/Interface/Shader.h>
 // shader
 #include "mesh_vert.h"
 #include "mesh_frag.h"
@@ -50,28 +50,8 @@ namespace Soarscape
             });
         m_QuadVAO->addVertexBuffer(quadVBO);
 
-        m_ScreenShader = glCreateProgram();
-        GLuint sfrag = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderBinary(1, &sfrag, GL_SHADER_BINARY_FORMAT_SPIR_V, screenquad_frag, sizeof(screenquad_frag));
-        glSpecializeShader(sfrag, "main", 0, nullptr, nullptr);
-        glAttachShader(m_ScreenShader, sfrag);
-
-        GLuint svert = glCreateShader(GL_VERTEX_SHADER);
-        glShaderBinary(1, &svert, GL_SHADER_BINARY_FORMAT_SPIR_V, screenquad_vert, sizeof(screenquad_vert));
-        glSpecializeShader(svert, "main", 0, nullptr, nullptr);
-        glAttachShader(m_ScreenShader, svert);
-        glLinkProgram(m_ScreenShader);
-        int success = 0;
-        char infoLog[512] = { 0 };
-        glGetProgramiv(m_ScreenShader, GL_LINK_STATUS, &success);
-        if (!success)
-        {
-            glGetProgramInfoLog(m_ScreenShader, 512, NULL, infoLog);
-            std::cout << "ERROR::SHADER::PROGROG::COMPILATION_FAILED\n"
-                << infoLog << std::endl;
-        }
-        glDeleteShader(svert);
-        glDeleteShader(sfrag);
+        m_ScreenShader = Shader::create("ScreenShader");
+        m_ScreenShader->link(screenquad_vert, sizeof(screenquad_vert), screenquad_frag, sizeof(screenquad_frag));
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
@@ -84,7 +64,7 @@ namespace Soarscape
         // engine run
         PublicSingleton<Engine>::getInstance().run();
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject()); // ·µ»ØÄ¬ÈÏ
-        glUseProgram(m_ScreenShader);
+        m_ScreenShader->bind();
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         m_QuadVAO->bind();

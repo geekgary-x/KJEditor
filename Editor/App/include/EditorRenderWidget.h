@@ -6,6 +6,7 @@ namespace Soarscape
 {
 	class FrameBuffer;
 	class VertexArray;
+	class Shader;
 	class EditorRendererWidget : public QOpenGLWidget
 	{
 	public:
@@ -18,6 +19,6 @@ namespace Soarscape
 	private:
 		std::shared_ptr<FrameBuffer>	m_FrameBuffer;
 		std::shared_ptr<VertexArray>	m_QuadVAO;
-		GLuint							m_ScreenShader;
+		std::shared_ptr<Shader>			m_ScreenShader;
 	};
 }
