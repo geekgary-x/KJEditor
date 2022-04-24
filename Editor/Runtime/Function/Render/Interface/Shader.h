@@ -19,14 +19,14 @@ namespace Soarscape
     private:
     };
 
-    class ShaderManager : public PublicSingleton<ShaderManager>
+    class ShaderPool : public PublicSingleton<ShaderPool>
     {
     public:
-        ShaderManager();
+        ShaderPool();
 
-        std::shared_ptr<Shader> addShader(const std::string& name,const uint32_t* vshader, size_t vsiz, const uint32_t* fshader, size_t fsize);
+        std::shared_ptr<Shader> add(const std::string& name,const uint32_t* vshader, size_t vsiz, const uint32_t* fshader, size_t fsize);
 
-        std::shared_ptr<Shader> getShader(const std::string& name);
+        std::shared_ptr<Shader> get(const std::string& name);
     private:
         std::map<std::string, std::shared_ptr<Shader>> m_ShaderMap;
     };

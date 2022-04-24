@@ -26,13 +26,13 @@ namespace Soarscape
         return nullptr;
     }
 
-    ShaderManager::ShaderManager()
+    ShaderPool::ShaderPool()
     {
-        addShader("MeshShader", mesh_vert, sizeof(mesh_vert), mesh_frag, sizeof(mesh_frag));
-        addShader("ScreenShader", screenquad_vert, sizeof(screenquad_vert), screenquad_frag, sizeof(screenquad_frag));
+        add("MeshShader", mesh_vert, sizeof(mesh_vert), mesh_frag, sizeof(mesh_frag));
+        add("ScreenShader", screenquad_vert, sizeof(screenquad_vert), screenquad_frag, sizeof(screenquad_frag));
     }
 
-    std::shared_ptr<Shader> ShaderManager::addShader(const std::string& name, const uint32_t* vshader, size_t vsiz, const uint32_t* fshader, size_t fsize)
+    std::shared_ptr<Shader> ShaderPool::add(const std::string& name, const uint32_t* vshader, size_t vsiz, const uint32_t* fshader, size_t fsize)
     {
         std::map<std::string, std::shared_ptr<Shader>>::iterator it = m_ShaderMap.find(name);
         if (it == m_ShaderMap.end())
@@ -44,7 +44,7 @@ namespace Soarscape
         return m_ShaderMap[name];
     }
 
-    std::shared_ptr<Shader> ShaderManager::getShader(const std::string& name)
+    std::shared_ptr<Shader> ShaderPool::get(const std::string& name)
     {
         return m_ShaderMap[name];
     }
