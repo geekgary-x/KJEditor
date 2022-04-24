@@ -50,8 +50,8 @@ namespace Soarscape
             });
         m_QuadVAO->addVertexBuffer(quadVBO);
 
-        vcgmesh = new VCGMesh("D:/datas/ply/cube.ply");
-        _texture = Texture2D::create("D:/datas/imgs/container2.png");
+        vcgmesh = new VCGMesh("D:/datas/ply/shan.ply");
+        _texture = Texture2D::create("D:/datas/ply/tayv6_2K_Albedo.png");
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)

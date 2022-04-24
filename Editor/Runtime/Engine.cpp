@@ -13,9 +13,12 @@ namespace Soarscape
     void Engine::run()
     {
         m_UISurface->getFramebuffer()->bind();
-        PublicSingleton<Renderer>::getInstance().tick();
+        glEnable(GL_DEPTH_TEST);
         glClearColor(0.3, 0.3, 0.3, 1.0);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+        PublicSingleton<Renderer>::getInstance().tick();
     }
     void Engine::shutdownEngine()
     {
