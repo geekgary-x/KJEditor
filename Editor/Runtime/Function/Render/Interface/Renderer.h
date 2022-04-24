@@ -14,7 +14,7 @@ namespace Soarscape
 		virtual void tick();
 
 		void setCamera(std::shared_ptr<Camera> cmera) { m_Camera; }
-
+		void render(const Mesh* mesh);
 		std::unique_ptr<RenderAPI> API;
 	private:
 		std::shared_ptr<Camera> m_Camera;

@@ -62,10 +62,8 @@ namespace Soarscape
         // engine run
         PublicSingleton<Engine>::getInstance().run();
         PublicSingleton<ShaderManager>::getInstance().getShader("MeshShader")->bind();
-        vcgmesh->m_VAO->bind();
-        PublicSingleton<Renderer>::getInstance().API->drawElements(vcgmesh->m_VAO);
-        //vcgmesh->m_VAO->bind();
-        //glDrawArrays(GL_TRIANGLES, 0, 3);
+        PublicSingleton<Renderer>::getInstance().render(vcgmesh);
+        
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject()); // ·µ»ØÄ¬ÈÏ
         PublicSingleton<ShaderManager>::getInstance().getShader("ScreenShader")->bind();
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

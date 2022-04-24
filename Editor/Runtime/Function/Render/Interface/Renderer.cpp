@@ -12,4 +12,9 @@ namespace Soarscape
 	{
 		m_Camera->bind(0);
 	}
+	void Renderer::render(const Mesh* mesh)
+	{
+		mesh->m_VAO->bind();
+		API->drawElements(mesh->m_VAO);
+	}
 }
