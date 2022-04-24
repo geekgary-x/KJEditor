@@ -83,7 +83,7 @@ namespace Soarscape
     }
     void VCGMesh::updateBuffer()
     {
-        if (m_VAO == nullptr|| m_VBO == nullptr)
+        if (m_VAO == nullptr|| m_VBO == nullptr || m_EBO == nullptr)
         {
             m_VAO = VertexArray::create();
             m_VBO = VertexBuffer::create((void*)m_V.data(), sizeof(float) * m_V.size() * 8);
@@ -92,7 +92,9 @@ namespace Soarscape
             { ShaderDataType::Float3, "aNormal" },
             { ShaderDataType::Float2, "aTexCoord" }
                 });
+            m_EBO = IndexBuffer::create(m_I.data(), m_I.size());
             m_VAO->addVertexBuffer(m_VBO);
+            m_VAO->setIndexBuffer(m_EBO);
         }
         else
         {

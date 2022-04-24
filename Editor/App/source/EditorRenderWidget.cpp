@@ -3,13 +3,14 @@
 #include <iostream>
 
 #include <Core/Base/macro.h>
-#include <Function/Render/Interface//FrameBuffer.h>
+#include <Function/Render/Interface/FrameBuffer.h>
 #include <EditorUI.h>
 #include <Engine.h>
 #include <Resource/Data/Implement/VCG/VCGMesh.h>
 
 #include <Function/Render/Interface/VertexArray.h>
 #include <Function/Render/Interface/Shader.h>
+#include <Function/Render/Interface/Renderer.h>
 
 namespace Soarscape
 {
@@ -48,7 +49,7 @@ namespace Soarscape
             });
         m_QuadVAO->addVertexBuffer(quadVBO);
 
-        vcgmesh = new VCGMesh("D:/datas/ply/triangle.ply");
+        vcgmesh = new VCGMesh("D:/datas/ply/cube.ply");
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
@@ -62,7 +63,9 @@ namespace Soarscape
         PublicSingleton<Engine>::getInstance().run();
         PublicSingleton<ShaderManager>::getInstance().getShader("MeshShader")->bind();
         vcgmesh->m_VAO->bind();
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        PublicSingleton<Renderer>::getInstance().API->drawElements(vcgmesh->m_VAO);
+        //vcgmesh->m_VAO->bind();
+        //glDrawArrays(GL_TRIANGLES, 0, 3);
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject()); // ·µ»ØÄ¬ÈÏ
         PublicSingleton<ShaderManager>::getInstance().getShader("ScreenShader")->bind();
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

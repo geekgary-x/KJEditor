@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "Function/Render/Interface/Renderer.h"
 #include "Core/Base/macro.h"
 #include <thread>
 #include <glad/glad.h>
@@ -12,6 +13,7 @@ namespace Soarscape
     void Engine::run()
     {
         m_UISurface->getFramebuffer()->bind();
+        PublicSingleton<Renderer>::getInstance().tick();
         glClearColor(0.3, 0.3, 0.3, 1.0);
         glClear(GL_COLOR_BUFFER_BIT);
     }

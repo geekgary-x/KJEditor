@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <glm/glm.hpp>
+#include "Function/Render/Interface/VertexArray.h"
 namespace Soarscape
 {
     class RenderAPI
@@ -16,6 +17,7 @@ namespace Soarscape
         virtual void clear() = 0;
         virtual void setClearColor(const glm::vec4& color) = 0;
         virtual void init() = 0;
+        virtual void drawElements(std::shared_ptr<VertexArray> vertexArray, uint32_t indexCount = 0) = 0;
     private:
         static API s_API;
     };
