@@ -11,10 +11,11 @@
 #include <Function/Render/Interface/VertexArray.h>
 #include <Function/Render/Interface/Shader.h>
 #include <Function/Render/Interface/Renderer.h>
-
+#include <Function/Render/Interface/Texture.h>
 namespace Soarscape
 {
     VCGMesh* vcgmesh;
+    std::shared_ptr<Texture2D> _texture;
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
 		: QOpenGLWidget(parent)
 	{}
@@ -50,6 +51,7 @@ namespace Soarscape
         m_QuadVAO->addVertexBuffer(quadVBO);
 
         vcgmesh = new VCGMesh("D:/datas/ply/cube.ply");
+        _texture = Texture2D::create("D:/datas/imgs/container2.png");
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
@@ -62,6 +64,7 @@ namespace Soarscape
         // engine run
         PublicSingleton<Engine>::getInstance().run();
         PublicSingleton<ShaderPool>::getInstance().get("MeshShader")->bind();
+        _texture->bind(0);
         PublicSingleton<Renderer>::getInstance().render(vcgmesh);
         
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject()); // ·µ»ØÄ¬ÈÏ
