@@ -19,6 +19,5 @@ namespace Soarscape
 	private:
 		std::shared_ptr<FrameBuffer>	m_FrameBuffer;
 		std::shared_ptr<VertexArray>	m_QuadVAO;
-		std::shared_ptr<Shader>			m_ScreenShader;
 	};
 }

@@ -10,14 +10,9 @@
 
 #include <Function/Render/Interface/VertexArray.h>
 #include <Function/Render/Interface/Shader.h>
-// shader
-#include "mesh_vert.h"
-#include "mesh_frag.h"
-#include "screenquad_vert.h"
-#include "screenquad_frag.h"
+
 namespace Soarscape
 {
-    std::shared_ptr<Shader> meshShader;
     VCGMesh* vcgmesh;
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
 		: QOpenGLWidget(parent)
@@ -54,12 +49,6 @@ namespace Soarscape
         m_QuadVAO->addVertexBuffer(quadVBO);
 
         vcgmesh = new VCGMesh("D:/datas/ply/triangle.ply");
-        LOG_INFO("size of {0}", vcgmesh->m_V.size());
-        
-        m_ScreenShader = Shader::create("ScreenShader");
-        m_ScreenShader->link(screenquad_vert, sizeof(screenquad_vert), screenquad_frag, sizeof(screenquad_frag));
-        meshShader = Shader::create("MeshShader");
-        meshShader->link(mesh_vert, sizeof(mesh_vert), mesh_frag, sizeof(mesh_frag));
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
@@ -71,11 +60,11 @@ namespace Soarscape
 	{
         // engine run
         PublicSingleton<Engine>::getInstance().run();
-        meshShader->bind();
+        PublicSingleton<ShaderManager>::getInstance().getShader("MeshShader")->bind();
         vcgmesh->m_VAO->bind();
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject()); // ·µ»ØÄ¬ÈÏ
-        m_ScreenShader->bind();
+        PublicSingleton<ShaderManager>::getInstance().getShader("ScreenShader")->bind();
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         m_QuadVAO->bind();

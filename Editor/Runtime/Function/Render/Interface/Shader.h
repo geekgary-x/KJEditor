@@ -2,6 +2,7 @@
 #include <memory>
 #include <glm/glm.hpp>
 #include <string>
+#include <map>
 #include "Core/Base/PublicSingleton.h"
 namespace Soarscape
 {
@@ -20,6 +21,13 @@ namespace Soarscape
 
     class ShaderManager : public PublicSingleton<ShaderManager>
     {
+    public:
+        ShaderManager();
 
+        void addShader(const std::string& name,const uint32_t* vshader, size_t vsiz, const uint32_t* fshader, size_t fsize);
+
+        std::shared_ptr<Shader> getShader(const std::string& name);
+    private:
+        std::map<std::string, std::shared_ptr<Shader>> m_ShaderMap;
     };
 }
