@@ -24,7 +24,7 @@ namespace Soarscape
     public:
         ShaderManager();
 
-        void addShader(const std::string& name,const uint32_t* vshader, size_t vsiz, const uint32_t* fshader, size_t fsize);
+        std::shared_ptr<Shader> addShader(const std::string& name,const uint32_t* vshader, size_t vsiz, const uint32_t* fshader, size_t fsize);
 
         std::shared_ptr<Shader> getShader(const std::string& name);
     private:

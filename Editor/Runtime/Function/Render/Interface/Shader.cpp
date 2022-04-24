@@ -32,10 +32,16 @@ namespace Soarscape
         addShader("ScreenShader", screenquad_vert, sizeof(screenquad_vert), screenquad_frag, sizeof(screenquad_frag));
     }
 
-    void ShaderManager::addShader(const std::string& name, const uint32_t* vshader, size_t vsiz, const uint32_t* fshader, size_t fsize)
+    std::shared_ptr<Shader> ShaderManager::addShader(const std::string& name, const uint32_t* vshader, size_t vsiz, const uint32_t* fshader, size_t fsize)
     {
-        m_ShaderMap[name] = Shader::create(name);
-        m_ShaderMap[name]->link(vshader, vsiz, fshader, fsize);
+        std::map<std::string, std::shared_ptr<Shader>>::iterator it = m_ShaderMap.find(name);
+        if (it == m_ShaderMap.end())
+        {
+            m_ShaderMap[name] = Shader::create(name);
+            m_ShaderMap[name]->link(vshader, vsiz, fshader, fsize);
+        }
+
+        return m_ShaderMap[name];
     }
 
     std::shared_ptr<Shader> ShaderManager::getShader(const std::string& name)
