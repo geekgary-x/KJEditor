@@ -12,6 +12,8 @@
 #include <Function/Render/Interface/Shader.h>
 #include <Function/Render/Interface/Renderer.h>
 #include <Function/Render/Interface/Texture.h>
+
+#include <Function/Event/EventSystem.h>
 namespace Soarscape
 {
     VCGMesh* vcgmesh;
@@ -24,31 +26,7 @@ namespace Soarscape
 
 	void EditorRendererWidget::initializeGL()
 	{
-		ASSERT(gladLoadGL(), "glad loadGL failed!");
-		glClearColor(0.3, 0.3, 0.3, 1.0);
-		FrameBufferSpecification spec;
-		spec.AttachmentsSpecification = { FrameBufferTextureFormat::RGBA8, FrameBufferTextureFormat::RED_INTEGER, FrameBufferTextureFormat::Depth };
-		spec.Height = 1280;
-		spec.Width = 720;
-		m_FrameBuffer = FrameBuffer::create(spec);
-		PublicSingleton<EditorUI>::getInstance().setFramebuffer(m_FrameBuffer);
-        
-        float quadVertices[] = {// vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
-                                // positions   // texCoords
-                                -1.0f, 1.0f, 0.0f, 1.0f,
-                                -1.0f, -1.0f, 0.0f, 0.0f,
-                                1.0f, -1.0f, 1.0f, 0.0f,
-
-                                -1.0f, 1.0f, 0.0f, 1.0f,
-                                1.0f, -1.0f, 1.0f, 0.0f,
-                                1.0f, 1.0f, 1.0f, 1.0f };
-        m_QuadVAO = VertexArray::create();
-        auto quadVBO = VertexBuffer::create((void*)quadVertices, sizeof(quadVertices));
-        quadVBO->setLayout({
-            { ShaderDataType::Float2, "aPos" },
-            { ShaderDataType::Float2, "aTexCoord" }
-            });
-        m_QuadVAO->addVertexBuffer(quadVBO);
+        PublicSingleton<Renderer>::getInstance().initialize();
 
         vcgmesh = new VCGMesh("D:/datas/ply/shan.ply");
         _texture = Texture2D::create("D:/datas/ply/tayv6_2K_Albedo.png");
@@ -56,24 +34,36 @@ namespace Soarscape
 
 	void EditorRendererWidget::resizeGL(int w, int h)
 	{
-        m_FrameBuffer->resize(w, h);
+        PublicSingleton<Renderer>::getInstance().screenFrameBuffer()->resize(w, h);
 	}
 
 	void EditorRendererWidget::paintGL()
 	{
         // engine run
-        PublicSingleton<Engine>::getInstance().run();
+        //PublicSingleton<Engine>::getInstance().run();
+        PublicSingleton<Renderer>::getInstance().begin();
         PublicSingleton<ShaderPool>::getInstance().get("MeshShader")->bind();
         _texture->bind(0);
         PublicSingleton<Renderer>::getInstance().render(vcgmesh);
         
-        glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebufferObject()); // ·µ»ØÄ¬ÈÏ
-        PublicSingleton<ShaderPool>::getInstance().get("ScreenShader")->bind();
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        m_QuadVAO->bind();
-        glDisable(GL_DEPTH_TEST);
-        glBindTexture(GL_TEXTURE_2D, m_FrameBuffer->getColorAttachmentRendererID());
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        PublicSingleton<Renderer>::getInstance().end(defaultFramebufferObject());
 	}
+
+    void EditorRendererWidget::mousePressEvent(QMouseEvent* event)
+    {
+        PublicSingleton<EventSystem>::getInstance().sendEvent("EditorCamera_Process_Key", (void*)10);
+    }
+
+    void EditorRendererWidget::mouseReleaseEvent(QMouseEvent* event)
+    {
+    }
+
+    void EditorRendererWidget::mouseDoubleClickEvent(QMouseEvent* event)
+    {
+    }
+
+    void EditorRendererWidget::mouseMoveEvent(QMouseEvent* event)
+    {
+    }
+    
 }

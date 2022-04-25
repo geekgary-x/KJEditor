@@ -38,3 +38,4 @@
 #endif // !NDEBUG
 
 #define ASSERT(checked, ...) { if(!(checked)) { LOG_ERROR(__VA_ARGS__); DEBUGBREAK(); } }
+

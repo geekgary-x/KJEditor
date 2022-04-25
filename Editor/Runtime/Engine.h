@@ -17,7 +17,7 @@ namespace Soarscape
         void setupUISurface(UIInterface* pui) { m_UISurface = pui; }
         void run();
         void shutdownEngine();
-
+        void renderRelatedInitialize();
     public:
         bool         m_isRunning = false;
         UIInterface* m_UISurface;

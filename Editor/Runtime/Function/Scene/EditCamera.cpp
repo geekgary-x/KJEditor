@@ -1,4 +1,5 @@
 #include "Function/Scene/EditCamera.h"
+#include "Core/Base/macro.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -16,5 +17,9 @@ namespace Soarscape
 	void EditorCamera::bind(size_t index)
 	{
 		m_UniformBuffer->bind(index);
+	}
+	void EditorCamera::handleEvent(Event* event)
+	{
+		LOG_INFO("Get event message: {0}", (int)event->parameter())
 	}
 }
