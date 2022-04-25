@@ -26,7 +26,7 @@ namespace Soarscape
     }
     void Engine::logicalTick()
     {
-        //PublicSingleton<EventSystem>::getInstance().processEvents();
+        PublicSingleton<EventSystem>::getInstance().processEvents();
     }
     void Engine::renderTick(uint32_t defaultFramebufferid)
     {

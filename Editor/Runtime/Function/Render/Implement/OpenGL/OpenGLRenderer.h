@@ -14,7 +14,6 @@ namespace Soarscape
 		virtual std::shared_ptr<FrameBuffer> screenFrameBuffer() override { return m_FrameBuffer; }
 		std::unique_ptr<RenderAPI> API;
 	private:
-		std::shared_ptr<Camera> m_Camera;
 		std::shared_ptr<FrameBuffer> m_FrameBuffer;
 		std::shared_ptr<VertexArray>	m_QuadVAO;
 	};

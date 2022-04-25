@@ -22,6 +22,8 @@ namespace Soarscape
         void shutdownEngine();
         void renderInitialize();
         void logicalInitialize();
+
+        float DeltaTime = 0.0f; // seconds
     public:
         bool         m_isRunning = false;
         UIInterface* m_UISurface;

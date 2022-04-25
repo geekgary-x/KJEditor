@@ -21,6 +21,14 @@ namespace Soarscape
 	}
 	void EditorCamera::handleEvent(Event* event)
 	{
+		static float tmp = 0;
+		tmp += 0.2;
+		glm::mat4 view = glm::translate(glm::mat4(1), { 0.0f, tmp, -10.0f });
+		glm::mat4 proj = glm::perspective(10.0f, 800.0f / 600.0f, 0.1f, 1000.0f);
+		m_ProjViewMatrix = proj * view;
+
+		m_UniformBuffer->setData(glm::value_ptr(m_ProjViewMatrix), sizeof(m_ProjViewMatrix));
 		LOG_INFO("Get event message: {0}", (int)event->parameter())
+		LOG_INFO("tmp: {0}", tmp)
 	}
 }
