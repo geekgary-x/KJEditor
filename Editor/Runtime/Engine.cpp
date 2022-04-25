@@ -37,6 +37,19 @@ namespace Soarscape
 
         PublicSingleton<Renderer>::getInstance().end(defaultFramebufferid);
     }
+
+    void Engine::renderInitialize()
+    {
+        PublicSingleton<Renderer>::getInstance().initialize();
+        PublicSingleton<Scene>::getInstance().initialize();
+        vcgmesh = new VCGMesh("D:/datas/ply/shan.ply");
+        _texture = Texture2D::create("D:/datas/ply/tayv6_2K_Albedo.png");
+    }
+    void Engine::logicalInitialize()
+    {
+        PublicSingleton<EventSystem>::getInstance().registerClient("EditorCamera_Process_Key", &PublicSingleton<EditorCamera>::getInstance());
+    }
+
     void Engine::shutdownEngine()
     {
         LOG_INFO("Shutdown editor engine");
@@ -49,15 +62,5 @@ namespace Soarscape
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         m_isRunning = false;
     }
-    void Engine::renderInitialize()
-    {
-        PublicSingleton<Renderer>::getInstance().initialize();
-        PublicSingleton<Scene>::getInstance().initialize();
-        vcgmesh = new VCGMesh("D:/datas/ply/shan.ply");
-        _texture = Texture2D::create("D:/datas/ply/tayv6_2K_Albedo.png");
-    }
-    void Engine::logicalInitialize()
-    {
-        PublicSingleton<EventSystem>::getInstance().registerClient("EditorCamera_Process_Key", &PublicSingleton<EditorCamera>::getInstance());
-    }
+    
 } // namespace SoaScape

@@ -7,7 +7,6 @@ namespace Soarscape
 {
 	void Scene::initialize()
 	{
-		PublicSingleton<EventSystem>::getInstance().registerClient("EditorCamera_Process_Key", &PublicSingleton<EditorCamera>::getInstance());
 	}
 	SceneObject Scene::CreateObject(const std::string& name)
 	{

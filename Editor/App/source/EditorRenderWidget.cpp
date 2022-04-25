@@ -7,6 +7,7 @@
 #include <Function/Event/EventSystem.h>
 
 #include <qelapsedtimer.h>
+#include <qevent.h>
 namespace Soarscape
 {
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
@@ -38,6 +39,7 @@ namespace Soarscape
 
     void EditorRendererWidget::mousePressEvent(QMouseEvent* event)
     {
+        event->button();
         PublicSingleton<EventSystem>::getInstance().sendEvent("EditorCamera_Process_Key", (void*)10);
     }
 
