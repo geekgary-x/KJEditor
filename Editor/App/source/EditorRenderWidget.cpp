@@ -33,6 +33,7 @@ namespace Soarscape
     void EditorRendererWidget::mousePressEvent(QMouseEvent* event)
     {
         PublicSingleton<EventSystem>::getInstance().sendEvent("EditorCamera_Process_Key", (void*)10);
+        PublicSingleton<EventSystem>::getInstance().processEvents();
     }
 
     void EditorRendererWidget::mouseReleaseEvent(QMouseEvent* event)
