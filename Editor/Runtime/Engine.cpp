@@ -7,20 +7,35 @@
 #include "Function/Scene/Scene.h"
 
 #include "Function/Render/Interface/Renderer.h"
+#include "Function/Render/Interface/Texture.h"
+#include "Function/Render/Interface/Shader.h"
+
+#include "Resource/Data/Implement/VCG/VCGMesh.h"
 
 #include "Core/Base/macro.h"
 #include <thread>
 #include <glad/glad.h>
 namespace Soarscape
 {
+    VCGMesh* vcgmesh;
+    std::shared_ptr<Texture2D> _texture;
     void Engine::startEngine(int argc, char* argv[])
     {
         LOG_INFO("Start editor engine");
         m_isRunning = true;
     }
-    void Engine::run()
+    void Engine::logicalTick()
     {
         PublicSingleton<EventSystem>::getInstance().processEvents();
+    }
+    void Engine::renderTick(uint32_t defaultFramebufferid)
+    {
+        PublicSingleton<Renderer>::getInstance().begin();
+        PublicSingleton<ShaderPool>::getInstance().get("MeshShader")->bind();
+        _texture->bind(0);
+        PublicSingleton<Renderer>::getInstance().render(vcgmesh);
+
+        PublicSingleton<Renderer>::getInstance().end(defaultFramebufferid);
     }
     void Engine::shutdownEngine()
     {
@@ -36,7 +51,9 @@ namespace Soarscape
     }
     void Engine::renderRelatedInitialize()
     {
-        //PublicSingleton<Renderer>::getInstance().initialize();
+        PublicSingleton<Renderer>::getInstance().initialize();
         PublicSingleton<Scene>::getInstance().initialize();
+        vcgmesh = new VCGMesh("D:/datas/ply/shan.ply");
+        _texture = Texture2D::create("D:/datas/ply/tayv6_2K_Albedo.png");
     }
 } // namespace SoaScape

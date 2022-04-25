@@ -15,7 +15,10 @@ namespace Soarscape
     public:
         void startEngine(int argc, char* argv[]);
         void setupUISurface(UIInterface* pui) { m_UISurface = pui; }
-        void run();
+
+        void logicalTick();
+        void renderTick(uint32_t defaultFramebufferid);
+
         void shutdownEngine();
         void renderRelatedInitialize();
     public:
