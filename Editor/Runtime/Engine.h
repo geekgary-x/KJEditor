@@ -20,7 +20,8 @@ namespace Soarscape
         void renderTick(uint32_t defaultFramebufferid);
 
         void shutdownEngine();
-        void renderRelatedInitialize();
+        void renderInitialize();
+        void logicalInitialize();
     public:
         bool         m_isRunning = false;
         UIInterface* m_UISurface;

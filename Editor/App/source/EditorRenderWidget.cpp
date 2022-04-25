@@ -15,7 +15,8 @@ namespace Soarscape
 
 	void EditorRendererWidget::initializeGL()
 	{
-        PublicSingleton<Engine>::getInstance().renderRelatedInitialize();
+        PublicSingleton<Engine>::getInstance().renderInitialize();
+        PublicSingleton<Engine>::getInstance().logicalInitialize();
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
