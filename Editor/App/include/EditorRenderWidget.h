@@ -23,6 +23,6 @@ namespace Soarscape
 		virtual void mouseDoubleClickEvent(QMouseEvent* event) override;
 		virtual void mouseMoveEvent(QMouseEvent* event) override;
 
-		MousePos* m_MousePos;
+		std::shared_ptr<MousePos> m_MousePos;
 	};
 }

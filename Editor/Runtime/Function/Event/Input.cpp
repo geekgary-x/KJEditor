@@ -1,10 +1,18 @@
 #include "Function/Event/Input.h"
-
+#include "Core/Base/macro.h"
 namespace Soarscape
 {
 	Input::Input()
 	{
 		keyMap["Left_Mouse_Down"] = KeyCode::Left_Mouse_Down;
 		keyMap["Left_Mouse_Release"] = KeyCode::Left_Mouse_Release;
+	}
+	MousePos::MousePos(float x, float y)
+		: x(x), y(y)
+	{
+	}
+	MousePos::~MousePos()
+	{
+		LOG_INFO("Delete Mouse Pos");
 	}
 }

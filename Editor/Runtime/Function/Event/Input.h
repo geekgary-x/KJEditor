@@ -3,14 +3,16 @@
 #include "Core/Base/PublicSingleton.h"
 namespace Soarscape
 {
-	struct MousePos
+	class MousePos
 	{
-		MousePos(float x, float y)
-			: x(x), y(y)
-		{}
+	public:
+		MousePos(float x, float y);
+		~MousePos();
 		float x;
 		float y;
 	};
+
+	// TODO: key map
 	class Input : public PublicSingleton<Input>
 	{
 	public:

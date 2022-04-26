@@ -7,6 +7,11 @@ namespace Soarscape
 		
 	}
 
+	EditorUI::~EditorUI()
+	{
+		delete m_Mainwindow;
+	}
+
 	void EditorUI::run()
 	{
 		LOG_INFO("EditorUI run");

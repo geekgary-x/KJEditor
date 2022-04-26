@@ -9,6 +9,7 @@ namespace Soarscape
 	{
 	public:
 		EditorUI();
+		~EditorUI();
 		void run() override;
 	private:
 		MainWindow* m_Mainwindow;

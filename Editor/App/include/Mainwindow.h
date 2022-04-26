@@ -6,15 +6,22 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+namespace Soarscape
 {
-    Q_OBJECT
+    class EditorRendererWidget;
+    class MainWindow : public QMainWindow
+    {
+        Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    public:
+        MainWindow(QWidget* parent = nullptr);
+        ~MainWindow();
 
-private:
-    Ui::MainWindow *ui;
-    ads::CDockManager* m_DockManager;
-};
+    private:
+        Ui::MainWindow* ui;
+        ads::CDockManager* m_DockManager;
+        ads::CDockWidget* m_ViewportDock;
+        EditorRendererWidget* m_RendererWidget;
+    };
+
+}

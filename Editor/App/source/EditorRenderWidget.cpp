@@ -11,11 +11,10 @@
 namespace Soarscape
 {
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
-		: QOpenGLWidget(parent), m_MousePos(new MousePos(0.0f, 0.0f))
+		: QOpenGLWidget(parent), m_MousePos(std::make_shared<MousePos>(0.0f, 0.0f))
 	{}
 	EditorRendererWidget::~EditorRendererWidget()
 	{
-        delete m_MousePos;
     }
 
 	void EditorRendererWidget::initializeGL()
@@ -59,7 +58,7 @@ namespace Soarscape
         m_MousePos->y = event->pos().y();
         if ((event->buttons() & Qt::LeftButton))
         {
-            PublicSingletonInstance(EventSystem).sendEvent("EditCamera_Rotate", (void*)m_MousePos);
+            PublicSingletonInstance(EventSystem).sendEvent("EditCamera_Rotate", (void*)m_MousePos.get());
         }
     }
     
