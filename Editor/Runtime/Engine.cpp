@@ -47,7 +47,6 @@ namespace Soarscape
     }
     void Engine::logicalInitialize()
     {
-        PublicSingleton<EventSystem>::getInstance().registerClient("EditorCamera_Process_Key", &PublicSingleton<EditorCamera>::getInstance());
     }
 
     void Engine::shutdownEngine()

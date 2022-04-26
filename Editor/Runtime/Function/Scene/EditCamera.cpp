@@ -5,21 +5,22 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
+
+#include "Engine.h"
+#include "Function/Event/EventSystem.h"
+#include "Function/Event/Input.h"
+#include "Core/Base/macro.h"
 namespace Soarscape
 {
 	EditorCamera::EditorCamera()
 	{
-		/*glm::mat4 view = glm::translate(glm::mat4(1), { 0.0f, 0.0f, -10.0f });
-		glm::mat4 proj = glm::perspective(10.0f, 800.0f / 600.0f, 0.1f, 1000.0f);
-		m_ProjViewMatrix =  proj * view;*/
+		// register Event
+		PublicSingleton<EventSystem>::getInstance().registerClient("EditCamera_Rotate", this);
 
-		
-
-		m_AspectRatio = 4.0f / 3.0f;
 #ifdef GLM_FORCE_RADIANS
 		m_Angle = 0.785398f; //45 degrees
 #else
-		m_Angle = 45.0f; //45 degrees
+		m_Angle = 10.0f; //45 degrees
 #endif
 		m_Near = 0.1f;
 		m_Far = 100.0f;
@@ -27,7 +28,6 @@ namespace Soarscape
 		m_Up = { 0.0f, 1.0f, 0.0f };
 		m_FocalPoint = { 0.0f, 0.0f, 0.0f };
 		m_AspectRatio = 800.0f / 600.0f;
-		m_Angle = 10.0f;
 		m_Near = 0.1f;
 		m_Far = 1000.0f;
 		genProjMat();
@@ -42,23 +42,18 @@ namespace Soarscape
 	}
 	void EditorCamera::handleEvent(Event* event)
 	{
-		/*static float tmp = 0;
-		tmp += 0.2;
-		glm::mat4 view = glm::translate(glm::mat4(1), { 0.0f, tmp, -10.0f });
-		glm::mat4 proj = glm::perspective(10.0f, 800.0f / 600.0f, 0.1f, 1000.0f);
-		m_ProjViewMatrix = proj * view;
-
-		m_UniformBuffer->setData(glm::value_ptr(m_ProjViewMatrix), sizeof(m_ProjViewMatrix));
-		MouseInput* input = (MouseInput*)(event->parameter());
-		if (input->key == MouseKey::Left)
+		MousePos* mousepos = nullptr;
+		if (event->eventId() == "EditCamera_Rotate")
 		{
-			LOG_INFO("left");
-		}*/
-		//LOG_INFO("Get event message: {0}", (uint32_t)input.key)
-		m_Pos.x -= 0.5;
-		genViewMat();
-		m_ProjViewMatrix = m_Proj * m_View;
-		m_UniformBuffer->setData(glm::value_ptr(m_ProjViewMatrix), sizeof(m_ProjViewMatrix));
+			if (mousepos = static_cast<MousePos*>(event->parameter()))
+			{
+				LOG_INFO("Mouse pos: {0} {1}", mousepos->x, mousepos->y);
+			}
+			m_Pos.x -= 1000.0 * PublicSingleton<Engine>::getInstance().DeltaTime;
+			genViewMat();
+			m_ProjViewMatrix = m_Proj * m_View;
+			m_UniformBuffer->setData(glm::value_ptr(m_ProjViewMatrix), sizeof(m_ProjViewMatrix));
+		}
 	}
 
 	void EditorCamera::setCameraPos(const glm::vec3& v)

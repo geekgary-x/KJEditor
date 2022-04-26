@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <qopenglwidget.h>
 #include <memory>
+#include <Function/Event/Input.h>
 namespace Soarscape
 {
 	class FrameBuffer;
@@ -16,10 +17,12 @@ namespace Soarscape
 		void initializeGL() override;
 		void resizeGL(int w, int h) override;
 		void paintGL() override;
-
+		// Event handlers
 		virtual void mousePressEvent(QMouseEvent* event) override;
 		virtual void mouseReleaseEvent(QMouseEvent* event) override;
 		virtual void mouseDoubleClickEvent(QMouseEvent* event) override;
 		virtual void mouseMoveEvent(QMouseEvent* event) override;
+
+		MousePos* m_MousePos;
 	};
 }

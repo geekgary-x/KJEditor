@@ -39,3 +39,4 @@
 
 #define ASSERT(checked, ...) { if(!(checked)) { LOG_ERROR(__VA_ARGS__); DEBUGBREAK(); } }
 
+#define PublicSingletonInstance(SingleClass) PublicSingleton<SingleClass>::getInstance()

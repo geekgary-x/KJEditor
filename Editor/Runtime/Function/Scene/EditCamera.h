@@ -51,5 +51,6 @@ namespace Soarscape
 
         glm::mat4 m_ProjViewMatrix = glm::mat4(1);
         std::shared_ptr<UniformBuffer> m_UniformBuffer;
+
     };
 }
