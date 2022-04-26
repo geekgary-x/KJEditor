@@ -5,13 +5,13 @@
 #include <Engine.h>
 #include <Function/Render/Interface/Renderer.h>
 #include <Function/Event/EventSystem.h>
-
+#include <Function/Scene/EditCamera.h>
 #include <qelapsedtimer.h>
 #include <qevent.h>
 namespace Soarscape
 {
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
-		: QOpenGLWidget(parent), m_MousePos(std::make_shared<MousePos>(0.0f, 0.0f))
+		: QOpenGLWidget(parent), m_MousePos(std::make_shared<MousePos>(0.0f, 0.0f)), m_MouseAngle(std::make_shared<MouseAngle>(0.0f, 0.0f))
 	{}
 	EditorRendererWidget::~EditorRendererWidget()
 	{
@@ -26,6 +26,7 @@ namespace Soarscape
 	void EditorRendererWidget::resizeGL(int w, int h)
 	{
         PublicSingleton<Renderer>::getInstance().screenFrameBuffer()->resize(w, h);
+        PublicSingleton<EditorCamera>::getInstance().setViewportSize(w, h);
 	}
 
 	void EditorRendererWidget::paintGL()
@@ -54,10 +55,15 @@ namespace Soarscape
     {
         m_MousePos->x = event->pos().x();
         m_MousePos->y = -event->pos().y();
-        if ((event->buttons() & Qt::LeftButton))
+        if (event->buttons() & Qt::LeftButton)
         {
             
             PublicSingletonInstance(EventSystem).sendEvent("EditCamera_Rotate", (void*)m_MousePos.get());
+        }
+        else if (event->buttons() & Qt::MiddleButton)
+        {
+
+            PublicSingletonInstance(EventSystem).sendEvent("EditCamera_Pan", (void*)m_MousePos.get());
         }
     }
 
@@ -68,8 +74,10 @@ namespace Soarscape
 
     void EditorRendererWidget::wheelEvent(QWheelEvent* event)
     {
-        event->angleDelta();
-        PublicSingletonInstance(EventSystem).sendEvent("EditCamera_Zoom", (void*)m_MousePos.get());
+        LOG_INFO("angleDelta: {0} {1}", event->angleDelta().x(), event->angleDelta().y())
+        m_MouseAngle->x = event->angleDelta().x();
+        m_MouseAngle->y = event->angleDelta().y();
+        PublicSingletonInstance(EventSystem).sendEvent("EditCamera_Zoom", (void*)m_MouseAngle.get());
     }
     
 }

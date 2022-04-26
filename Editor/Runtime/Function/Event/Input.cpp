@@ -13,6 +13,13 @@ namespace Soarscape
 	}
 	MousePos::~MousePos()
 	{
-		LOG_INFO("Delete Mouse Pos");
+	}
+
+	MouseAngle::MouseAngle(float x, float y)
+		: x(x), y(y)
+	{
+	}
+	MouseAngle::~MouseAngle()
+	{
 	}
 }

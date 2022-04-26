@@ -26,5 +26,6 @@ namespace Soarscape
 
 
 		std::shared_ptr<MousePos> m_MousePos;
+		std::shared_ptr<MouseAngle> m_MouseAngle;
 	};
 }

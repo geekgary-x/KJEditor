@@ -19,7 +19,9 @@ namespace Soarscape
 	{
 		// register Event
 		PublicSingleton<EventSystem>::getInstance().registerClient("EditCamera_Begin", this);
+		PublicSingleton<EventSystem>::getInstance().registerClient("EditCamera_Pan", this);
 		PublicSingleton<EventSystem>::getInstance().registerClient("EditCamera_Rotate", this);
+		PublicSingleton<EventSystem>::getInstance().registerClient("EditCamera_Zoom", this);
 		PublicSingleton<EventSystem>::getInstance().registerClient("EditCamera_End", this);
 
 #ifdef GLM_FORCE_RADIANS
@@ -37,9 +39,7 @@ namespace Soarscape
 		m_Far = 1000.0f;
 		genProjMat();
 		genViewMat();
-		m_ProjViewMatrix = m_Proj * m_View;
-		m_UniformBuffer = UniformBuffer::create(sizeof(m_ProjViewMatrix));
-		m_UniformBuffer->setData(glm::value_ptr(m_ProjViewMatrix), sizeof(m_ProjViewMatrix));
+		updateBuffer();
 	}
 	void EditorCamera::bind(size_t index)
 	{
@@ -48,6 +48,7 @@ namespace Soarscape
 	void EditorCamera::handleEvent(Event* event)
 	{
 		MousePos* mousepos = nullptr;
+		MouseAngle* mouseangle = nullptr;
 
 		if (event->eventId() == "EditCamera_Begin")
 		{
@@ -63,8 +64,28 @@ namespace Soarscape
 				m_InitialMousePosition = mouse;
 				rotate(delta);
 				genViewMat();
-				m_ProjViewMatrix = m_Proj * m_View;
-				m_UniformBuffer->setData(glm::value_ptr(m_ProjViewMatrix), sizeof(m_ProjViewMatrix));
+				updateBuffer();
+			}
+		}
+		if (event->eventId() == "EditCamera_Pan")
+		{
+			if (mousepos = static_cast<MousePos*>(event->parameter()))
+			{
+				const glm::vec2 mouse = { mousepos->x, mousepos->y };
+				glm::vec2 delta = (mouse - m_InitialMousePosition) * 0.001f;
+				m_InitialMousePosition = mouse;
+				pan(delta);
+				genViewMat();
+				updateBuffer();
+			}
+		}
+		if (event->eventId() == "EditCamera_Zoom")
+		{
+			if (mouseangle = static_cast<MouseAngle*>(event->parameter()))
+			{
+				zoom(mouseangle->y);
+				genViewMat();
+				updateBuffer();
 			}
 		}
 
@@ -72,21 +93,6 @@ namespace Soarscape
 		{
 			end(event);
 		}
-	}
-
-	void EditorCamera::setCameraPos(const glm::vec3& v)
-	{
-		m_Pos = v;
-	}
-
-	void EditorCamera::setCameraFocus(const glm::vec3& v)
-	{
-		m_FocalPoint = v;
-	}
-
-	void EditorCamera::setCameraUpVec(const glm::vec3& v)
-	{
-		m_Up = v;
 	}
 
 	void EditorCamera::setAspectRatio(const float ar)
@@ -109,26 +115,6 @@ namespace Soarscape
 		m_Far = d;
 	}
 
-	glm::mat4 EditorCamera::getViewMat()
-	{
-		return m_View;
-	}
-
-	float* EditorCamera::getViewMatRef()
-	{
-		return glm::value_ptr(m_View);
-	}
-
-	glm::mat4 EditorCamera::getProjMat()
-	{
-		return m_Proj;
-	}
-
-	float* EditorCamera::getProjMatRef()
-	{
-		return glm::value_ptr(m_Proj);
-	}
-
 	void EditorCamera::genViewMat()
 	{
 		m_Pos = calculatePosition();
@@ -141,7 +127,14 @@ namespace Soarscape
 
 	void EditorCamera::genProjMat()
 	{
+		m_AspectRatio = m_ViewportWidth / m_ViewportHeight;
 		m_Proj = glm::perspective(m_Angle, m_AspectRatio, m_Near, m_Far);
+	}
+	void EditorCamera::updateBuffer()
+	{
+		m_ProjViewMatrix = m_Proj * m_View;
+		m_UniformBuffer = UniformBuffer::create(sizeof(m_ProjViewMatrix));
+		m_UniformBuffer->setData(glm::value_ptr(m_ProjViewMatrix), sizeof(m_ProjViewMatrix));
 	}
 	void EditorCamera::rotate(glm::vec2 delta)
 	{
@@ -151,9 +144,20 @@ namespace Soarscape
 	}
 	void EditorCamera::pan(glm::vec2 delta)
 	{
-		
+		auto [xSpeed, ySpeed] = panSpeed();
+		m_FocalPoint -= -getRightDirection() * delta.x * xSpeed * m_Distance * 10.0f;
+		m_FocalPoint += getUpDirection() * delta.y * ySpeed * m_Distance * 10.0f;
 	}
+	std::pair<float, float> EditorCamera::panSpeed() const
+	{
+		float x = std::min(m_ViewportWidth / 1000.0f, 2.4f); // max = 2.4f
+		float xFactor = 0.0366f * (x * x) - 0.1778f * x + 0.3021f;
 
+		float y = std::min(m_ViewportHeight / 1000.0f, 2.4f); // max = 2.4f
+		float yFactor = 0.0366f * (y * y) - 0.1778f * y + 0.3021f;
+
+		return { xFactor, yFactor };
+	}
 	void EditorCamera::begin(Event* event)
 	{
 		MousePos* mousepos = nullptr;
@@ -196,9 +200,11 @@ namespace Soarscape
 		return m_FocalPoint - getForwardDirection() * m_Distance;
 	}
 
-	void EditorCamera::MouseZoom(float delta)
+	void EditorCamera::zoom(float delta)
 	{
-		m_Distance -= delta * ZoomSpeed();
+		LOG_INFO("delta zoom : {0}", delta);
+		delta = delta > 0 ? 0.1 : -0.1;
+		m_Distance -= delta * zoomSpeed();
 		if (m_Distance < 1.0f)
 		{
 			m_FocalPoint += getForwardDirection();
@@ -206,7 +212,7 @@ namespace Soarscape
 		}
 	}
 
-	float EditorCamera::ZoomSpeed() const
+	float EditorCamera::zoomSpeed() const
 	{
 		float distance = m_Distance * 0.2f;
 		distance = std::max(distance, 0.0f);

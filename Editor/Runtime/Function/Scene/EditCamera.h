@@ -12,22 +12,12 @@ namespace Soarscape
         void bind(size_t index = 0);
         void handleEvent(Event* event) override;
 
-		//View settings
-		void setCameraPos(const glm::vec3& v);
-		void setCameraFocus(const glm::vec3& v);
-		void setCameraUpVec(const glm::vec3& v);
-
 		//Projection settings
 		void setAspectRatio(const float ar);
 		void setViewAngle(const float a);
 		void setNearClipDist(const float d);
 		void setFarClipDist(const float d);
-
-		//Get matrix data
-		glm::mat4 getViewMat();
-		float* getViewMatRef();
-		glm::mat4 getProjMat();
-		float* getProjMatRef();
+		inline void setViewportSize(float width, float height) { m_ViewportWidth = width; m_ViewportHeight = height; genProjMat();updateBuffer();}
 		// Get attitude
 		glm::quat EditorCamera::getOrientation() const;
 		glm::vec3 EditorCamera::getForwardDirection() const;
@@ -35,12 +25,13 @@ namespace Soarscape
 		glm::vec3 EditorCamera::getUpDirection() const;
 		glm::vec3 EditorCamera::calculatePosition();
 
-		void EditorCamera::MouseZoom(float delta);
-		float EditorCamera::ZoomSpeed() const;
+		void EditorCamera::zoom(float delta);
+		float EditorCamera::zoomSpeed() const;
 
 		//Create matrices
 		void genViewMat();
 		void genProjMat();
+		void updateBuffer();
     private:
 		glm::vec2 m_InitialMousePosition = { 0.0, 0.0 };
 
@@ -59,6 +50,8 @@ namespace Soarscape
 
 		float m_Pitch = 0.0f, m_Yaw = 0.0f;
 
+		float m_ViewportWidth = 1280, m_ViewportHeight = 720;
+
 		//functional matrices
 		glm::mat4 m_View; ///< View matrix for OpenGL
 		glm::mat4 m_Proj; ///< Projection matrix for OpenGL
@@ -68,6 +61,7 @@ namespace Soarscape
 
 		void rotate(glm::vec2 delta);
 		void pan(glm::vec2 delta);
+		std::pair<float, float> EditorCamera::panSpeed() const;
 
 		bool m_Begin = false;
 		void begin(Event* event);

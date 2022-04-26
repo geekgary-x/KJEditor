@@ -11,6 +11,15 @@ namespace Soarscape
 		float x;
 		float y;
 	};
+	class MouseAngle
+	{
+	public:
+		MouseAngle(float x, float y);
+		~MouseAngle();
+		float x;
+		float y;
+	};
+
 
 	// TODO: key map
 	class Input : public PublicSingleton<Input>
