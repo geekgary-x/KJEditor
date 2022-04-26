@@ -41,11 +41,9 @@ namespace Soarscape
 
     void EditorRendererWidget::mousePressEvent(QMouseEvent* event)
     {
-    }
-
-    void EditorRendererWidget::mouseReleaseEvent(QMouseEvent* event)
-    {
-        
+        m_MousePos->x = event->pos().x();
+        m_MousePos->y = -event->pos().y();
+        PublicSingletonInstance(EventSystem).sendEvent("EditCamera_Begin", (void*)m_MousePos.get());
     }
 
     void EditorRendererWidget::mouseDoubleClickEvent(QMouseEvent* event)
@@ -55,11 +53,23 @@ namespace Soarscape
     void EditorRendererWidget::mouseMoveEvent(QMouseEvent* event)
     {
         m_MousePos->x = event->pos().x();
-        m_MousePos->y = event->pos().y();
+        m_MousePos->y = -event->pos().y();
         if ((event->buttons() & Qt::LeftButton))
         {
+            
             PublicSingletonInstance(EventSystem).sendEvent("EditCamera_Rotate", (void*)m_MousePos.get());
         }
+    }
+
+    void EditorRendererWidget::mouseReleaseEvent(QMouseEvent* event)
+    {
+        PublicSingletonInstance(EventSystem).sendEvent("EditCamera_End", (void*)m_MousePos.get());
+    }
+
+    void EditorRendererWidget::wheelEvent(QWheelEvent* event)
+    {
+        event->angleDelta();
+        PublicSingletonInstance(EventSystem).sendEvent("EditCamera_Zoom", (void*)m_MousePos.get());
     }
     
 }
