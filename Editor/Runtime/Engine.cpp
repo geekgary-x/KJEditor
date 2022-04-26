@@ -42,7 +42,7 @@ namespace Soarscape
     {
         PublicSingleton<Renderer>::getInstance().initialize();
         PublicSingleton<Scene>::getInstance().initialize();
-        vcgmesh = new VCGMesh("D:/datas/ply/shan.ply");
+        vcgmesh = new VCGMesh("D:/datas/ply/scene_mesh_refine.ply");
         _texture = Texture2D::create("D:/datas/ply/tayv6_2K_Albedo.png");
     }
     void Engine::logicalInitialize()

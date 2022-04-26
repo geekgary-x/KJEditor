@@ -15,6 +15,8 @@ namespace Soarscape
     {
         m_V.clear();
         m_V.reserve(m_Mesh.VN());
+        vcg::tri::RequirePerVertexNormal<BaseTriMesh>;
+        vcg::tri::UpdateNormal<BaseTriMesh>::PerVertexNormalizedPerFace(m_Mesh);
         for each (auto & vert in m_Mesh.vert)
         {
             Vertex v;

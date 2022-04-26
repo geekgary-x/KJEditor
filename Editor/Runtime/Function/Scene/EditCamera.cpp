@@ -78,6 +78,11 @@ namespace Soarscape
 			if (mousepos = static_cast<MousePos*>(event->parameter()))
 			{
 				const glm::vec2 mouse = { mousepos->x, mousepos->y };
+				if (!m_Begin)
+				{
+					m_InitialMousePosition = mouse;
+					m_Begin = true;
+				}
 				glm::vec2 delta = (mouse - m_InitialMousePosition) * 0.001f;
 				m_InitialMousePosition = mouse;
 				pan(delta);
