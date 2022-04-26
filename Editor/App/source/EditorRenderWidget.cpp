@@ -53,8 +53,8 @@ namespace Soarscape
 
     void EditorRendererWidget::mouseMoveEvent(QMouseEvent* event)
     {
-        m_MousePos->x = event->pos().x();
-        m_MousePos->y = -event->pos().y();
+        m_MousePos->x = -event->pos().x();
+        m_MousePos->y = event->pos().y();
         if (event->buttons() & Qt::LeftButton)
         {
             

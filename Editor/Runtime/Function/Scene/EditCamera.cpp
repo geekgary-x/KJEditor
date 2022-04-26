@@ -27,10 +27,10 @@ namespace Soarscape
 #ifdef GLM_FORCE_RADIANS
 		m_Angle = 0.785398f; //45 degrees
 #else
-		m_Angle = 10.0f; //45 degrees
+		m_Angle = 45.0f; //45 degrees
 #endif
-		m_Near = 0.1f;
-		m_Far = 100.0f;
+		m_Near = 0.000001f;
+		m_Far = 1000.0f;
 		m_Pos = glm::vec3(10.0f, 10.0f, 8.0f);
 		m_Up = { 0.0f, 1.0f, 0.0f };
 		m_FocalPoint = { 0.0f, 0.0f, 0.0f };
@@ -55,11 +55,17 @@ namespace Soarscape
 			begin(event);
 		}
 
-		if (event->eventId() == "EditCamera_Rotate")
+		if ((event->eventId() == "EditCamera_Rotate") )
 		{
 			if (mousepos = static_cast<MousePos*>(event->parameter()))
 			{
+				
 				const glm::vec2 mouse = { mousepos->x, mousepos->y };
+				if (!m_Begin)
+				{
+					m_InitialMousePosition = mouse;
+					m_Begin = true;
+				}
 				glm::vec2 delta = (mouse - m_InitialMousePosition) * 0.001f;
 				m_InitialMousePosition = mouse;
 				rotate(delta);
@@ -168,7 +174,6 @@ namespace Soarscape
 				m_InitialMousePosition = { mousepos->x, mousepos->y };
 			}
 		}
-		m_Begin = true;
 	}
 
 	void EditorCamera::end(Event* event)
@@ -205,11 +210,11 @@ namespace Soarscape
 		LOG_INFO("delta zoom : {0}", delta);
 		delta = delta > 0 ? 0.1 : -0.1;
 		m_Distance -= delta * zoomSpeed();
-		if (m_Distance < 1.0f)
+		/*if (m_Distance < 1.0f)
 		{
 			m_FocalPoint += getForwardDirection();
 			m_Distance = 1.0f;
-		}
+		}*/
 	}
 
 	float EditorCamera::zoomSpeed() const
