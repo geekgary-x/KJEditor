@@ -4,6 +4,8 @@
 #include "Function/Event/EventSystem.h"
 #include "Function/Scene/EditCamera.h"
 #include "Function/Scene/Light.h"
+
+#include "Function/Scene/Material.h"
 namespace Soarscape
 {
 	Scene::Scene()
@@ -14,6 +16,7 @@ namespace Soarscape
 	{
 		m_CurrentCamera->bind();
 		PublicSingletonInstance(GLobalLight).bind(1);
+		PublicSingletonInstance(MaterialPool).getMaterial("BasicMaterial")->bind(2);
 	}
 	void Scene::initialize()
 	{
