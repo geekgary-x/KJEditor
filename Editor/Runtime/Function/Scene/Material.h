@@ -12,9 +12,9 @@ namespace Soarscape
 	public:
 		class UniformBlock
 		{
-			glm::vec3 Ambient = { 1.0f, 1.0f, 1.0f };
-			glm::vec3 Diffuse = { 1.0f, 1.0f, 1.0f };
-			glm::vec3 Specular = { 1.0f, 1.0f, 1.0f };
+			glm::vec3 Ambient = { 0.0215, 0.1745, 0.0215 };
+			glm::vec3 Diffuse = { 0.07568, 0.61424, 0.07568 };
+			glm::vec3 Specular = { 0.633, 0.727811, 0.633 };
 			float Shininess = 0.6f;
 		};
 		virtual void bind(uint32_t index){};
