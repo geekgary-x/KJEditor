@@ -8,12 +8,12 @@ namespace Soarscape
 {
     class EditorCamera : public Camera, public Listener, public PublicSingleton<EditorCamera>
     {
+    public:
 		struct  UniformBlock
 		{
 			glm::mat4 ProjView = glm::mat4(1.0);
 			glm::vec3 Pos = { 0.0, 0.0, 0.0 };
 		};
-    public:
         EditorCamera();
         void bind(size_t index = 0);
         void handleEvent(Event* event) override;

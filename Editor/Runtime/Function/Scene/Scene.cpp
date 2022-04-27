@@ -3,6 +3,7 @@
 
 #include "Function/Event/EventSystem.h"
 #include "Function/Scene/EditCamera.h"
+#include "Function/Scene/Light.h"
 namespace Soarscape
 {
 	Scene::Scene()
@@ -12,6 +13,7 @@ namespace Soarscape
 	void Scene::renderTick()
 	{
 		m_CurrentCamera->bind();
+		PublicSingletonInstance(GLobalLight).bind(1);
 	}
 	void Scene::initialize()
 	{

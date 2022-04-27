@@ -6,7 +6,7 @@ layout (location = 2) in vec2 in_TexCoord;
 layout (location = 0) out vec2 out_TexCoord; 
 layout (location = 1) out flat vec3 out_CameraPos; 
 
-layout(std140, binding = 0) uniform Camera
+layout(std140, binding = 0) uniform block1
 {
 	mat4 u_ViewProjection;
 	vec3 u_CameraPos;
