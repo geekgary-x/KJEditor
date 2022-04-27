@@ -24,7 +24,7 @@ namespace Soarscape
     {
         delete ui;
         delete m_DockManager;
-        delete m_RendererWidget;
+        //delete m_RendererWidget;
     }
 }
 
