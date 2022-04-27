@@ -23,7 +23,8 @@ namespace Soarscape
 		PublicSingleton<EventSystem>::getInstance().registerClient("EditCamera_Rotate", this);
 		PublicSingleton<EventSystem>::getInstance().registerClient("EditCamera_Zoom", this);
 		PublicSingleton<EventSystem>::getInstance().registerClient("EditCamera_End", this);
-
+		m_UniformBuffer = UniformBuffer::create(sizeof(glm::vec3) + sizeof(glm::mat4));
+		LOG_INFO("sizeof vec3:{0} sizof mat4: {1}", sizeof(glm::vec3) ,sizeof(glm::mat4))
 #ifdef GLM_FORCE_RADIANS
 		m_Angle = 0.785398f; //45 degrees
 #else
@@ -143,9 +144,10 @@ namespace Soarscape
 	}
 	void EditorCamera::updateBuffer()
 	{
+		m_UniformBlackData.Pos = calculatePosition();
 		m_ProjViewMatrix = m_Proj * m_View;
-		m_UniformBuffer = UniformBuffer::create(sizeof(m_ProjViewMatrix));
-		m_UniformBuffer->setData(glm::value_ptr(m_ProjViewMatrix), sizeof(m_ProjViewMatrix));
+		m_UniformBlackData.ProjView = m_ProjViewMatrix;
+		m_UniformBuffer->setData(&m_UniformBlackData, sizeof(m_UniformBlackData), 0);
 	}
 	void EditorCamera::rotate(glm::vec2 delta)
 	{

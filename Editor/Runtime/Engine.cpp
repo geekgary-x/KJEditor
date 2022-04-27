@@ -31,6 +31,7 @@ namespace Soarscape
     void Engine::renderTick(uint32_t defaultFramebufferid)
     {
         PublicSingleton<Renderer>::getInstance().begin();
+        PublicSingleton<Scene>::getInstance().renderTick();
         PublicSingleton<ShaderPool>::getInstance().get("MeshShader")->bind();
         _texture->bind(0);
         PublicSingleton<Renderer>::getInstance().render(vcgmesh);

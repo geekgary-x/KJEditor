@@ -1,7 +1,8 @@
 #pragma once
 #include <entt/entt.hpp>
-#include <Core/Base/PublicSingleton.h>
+#include "Core/Base/PublicSingleton.h"
 #include "Core/Base/macro.h"
+#include "Function/Scene/Camera.h"
 namespace Soarscape
 {
 	class SceneObject;
@@ -9,13 +10,16 @@ namespace Soarscape
 	{
 		friend class SceneObject;
 	public:
-		Scene() = default;
+		Scene();
 		~Scene() = default;
+
+        void renderTick();
 
         void initialize();
 		SceneObject CreateObject(const std::string& name = std::string());
 	private:
 		entt::registry m_Registry;
+        Camera* m_CurrentCamera;
 	};
 
     class SceneObject

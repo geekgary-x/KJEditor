@@ -5,6 +5,14 @@
 #include "Function/Scene/EditCamera.h"
 namespace Soarscape
 {
+	Scene::Scene()
+	{
+		m_CurrentCamera = &PublicSingletonInstance(EditorCamera);
+	}
+	void Scene::renderTick()
+	{
+		m_CurrentCamera->bind();
+	}
 	void Scene::initialize()
 	{
 	}

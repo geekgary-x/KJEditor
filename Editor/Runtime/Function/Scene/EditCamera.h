@@ -3,10 +3,16 @@
 #include "Function/Render/Interface/UniformBuffer.h"
 #include "Function/Event/Listener.h"
 #include "glm/glm.hpp"
+#include "Core/Base/PublicSingleton.h"
 namespace Soarscape
 {
-    class EditorCamera : public Camera, public Listener
+    class EditorCamera : public Camera, public Listener, public PublicSingleton<EditorCamera>
     {
+		struct  UniformBlock
+		{
+			glm::mat4 ProjView = glm::mat4(1.0);
+			glm::vec3 Pos = { 0.0, 0.0, 0.0 };
+		};
     public:
         EditorCamera();
         void bind(size_t index = 0);
@@ -34,7 +40,7 @@ namespace Soarscape
 		void updateBuffer();
     private:
 		glm::vec2 m_InitialMousePosition = { 0.0, 0.0 };
-
+		UniformBlock m_UniformBlackData;
 		//View matrix variables
 		glm::vec3 m_Pos; ///< position of the camera
 		glm::vec3 m_FocalPoint; ///< focal point of the camera

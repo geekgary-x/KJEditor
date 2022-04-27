@@ -43,7 +43,6 @@ namespace Soarscape
 		glEnable(GL_DEPTH_TEST);
 		glClearColor(0.3, 0.3, 0.3, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		PublicSingleton<EditorCamera>::getInstance().bind();
 	}
 	void OpenGLRenderer::end(uint32_t defaultFramebuffer)
 	{

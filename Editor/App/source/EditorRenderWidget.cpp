@@ -36,7 +36,7 @@ namespace Soarscape
         PublicSingleton<Engine>::getInstance().logicalTick();
         PublicSingleton<Engine>::getInstance().renderTick(defaultFramebufferObject());
         update();
-        PublicSingleton<Engine>::getInstance().DeltaTime = timer.nsecsElapsed()* 0.000000001f;
+        PublicSingleton<Engine>::getInstance().DeltaTime = timer.nsecsElapsed()* 1.0e-9f;
 	}
 
 
