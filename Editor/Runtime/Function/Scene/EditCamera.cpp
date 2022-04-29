@@ -214,7 +214,6 @@ namespace Soarscape
 
 	void EditorCamera::zoom(float delta)
 	{
-		LOG_INFO("delta zoom : {0}", delta);
 		delta = delta > 0 ? 0.1 : -0.1;
 		m_Distance -= delta * zoomSpeed();
 		/*if (m_Distance < 1.0f)

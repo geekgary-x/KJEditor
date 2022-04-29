@@ -8,6 +8,8 @@
 #include <Function/Scene/EditCamera.h>
 #include <qelapsedtimer.h>
 #include <qevent.h>
+#include <QtImGui.h>
+#include <imgui.h>
 namespace Soarscape
 {
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
@@ -21,6 +23,7 @@ namespace Soarscape
 	{
         PublicSingleton<Engine>::getInstance().renderInitialize();
         PublicSingleton<Engine>::getInstance().logicalInitialize();
+        QtImGui::initialize(this);
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
@@ -37,6 +40,12 @@ namespace Soarscape
         PublicSingleton<Engine>::getInstance().renderTick(defaultFramebufferObject());
         update();
         PublicSingleton<Engine>::getInstance().DeltaTime = timer.nsecsElapsed()* 1.0e-9f;
+        QtImGui::newFrame();
+
+        ImGui::Text("Hello");
+
+        ImGui::Render();
+        QtImGui::render();
 	}
 
 
@@ -74,7 +83,6 @@ namespace Soarscape
 
     void EditorRendererWidget::wheelEvent(QWheelEvent* event)
     {
-        LOG_INFO("angleDelta: {0} {1}", event->angleDelta().x(), event->angleDelta().y())
         m_MouseAngle->x = event->angleDelta().x();
         m_MouseAngle->y = event->angleDelta().y();
         PublicSingletonInstance(EventSystem).sendEvent("EditCamera_Zoom", (void*)m_MouseAngle.get());
